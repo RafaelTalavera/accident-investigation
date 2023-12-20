@@ -1,7 +1,10 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
 
+import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.Sector;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,14 +27,19 @@ public class WorkPlace implements Serializable {
     private String name;
     private String sector;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worker_id")
-    private Worker worker;
+    @JsonBackReference
+    @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Worker> workers;
 
     @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Investigation> investigations;
 
-    private Sector sector1;
+    public WorkPlace(WorkPlaceRequestDTO workPlaceRequestDTO){
+        this.name = workPlaceRequestDTO.name();
+        this.sector = workPlaceRequestDTO.sector();
+        this.investigations = workPlaceRequestDTO.ivestigations();
+        this.workers = workPlaceRequestDTO.workers();
+    }
 
     @Serial
     private static final long serialVersionUID = 1L;

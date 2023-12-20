@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 public class Investigation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +24,7 @@ public class Investigation {
     private Boolean workOccasion;
 
     private String authorizationDetails;
-    private Boolean authorization;
+    private Boolean authorizationWork;
 
     private String riskDetails;
     private Boolean risk;
