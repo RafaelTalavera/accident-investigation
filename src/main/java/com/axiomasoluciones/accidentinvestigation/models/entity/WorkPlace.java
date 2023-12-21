@@ -31,8 +31,13 @@ public class WorkPlace implements Serializable {
     @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Worker> workers;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Investigation> investigations;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Event> events;
 
     public WorkPlace(WorkPlaceRequestDTO workPlaceRequestDTO){
         this.name = workPlaceRequestDTO.name();

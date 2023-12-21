@@ -6,7 +6,7 @@ import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
 import java.util.List;
 import java.util.Optional;
 
-public interface IWorkerPlaceService {
+public interface IWorkPlaceService {
     public List<WorkPlace> findAll();
 
     Optional<WorkPlace> findById(Long id);

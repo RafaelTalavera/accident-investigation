@@ -20,9 +20,6 @@ public class WorkerServiceImplements implements IWorkerService {
     @Autowired
     private IWorkerDao workerDao;
 
-    @Autowired
-    private IWorkerPlaceService workPlaceService;
-
     @Override
     @Transactional(readOnly = true)
     public List<Worker> findAll() {
@@ -65,7 +62,5 @@ public class WorkerServiceImplements implements IWorkerService {
 
         return workerDao.save(existingWorker);
     }
-
-
 
 }

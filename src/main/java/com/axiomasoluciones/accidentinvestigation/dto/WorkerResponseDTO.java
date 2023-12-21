@@ -18,7 +18,12 @@ public record WorkerResponseDTO(
         List<Event> events
 ) {
     public WorkerResponseDTO(Worker worker){
-        this(worker.getId(), worker.getFullName(), worker.getBirth(), worker.getAddress(),worker.getEntry(),
-                worker.getWorkPlace().getId(), worker.getEvents());
+        this(worker.getId(),
+                worker.getFullName(),
+                worker.getBirth(),
+                worker.getAddress(),
+                worker.getEntry(),
+                worker.getWorkPlace().getId(),
+                worker.getEvents());
     }
 }

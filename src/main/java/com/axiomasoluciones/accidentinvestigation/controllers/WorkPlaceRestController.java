@@ -1,13 +1,10 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
 
-import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceRequestDTO;
 import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceResponseDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.WorkerResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
-import com.axiomasoluciones.accidentinvestigation.models.entity.Worker;
-import com.axiomasoluciones.accidentinvestigation.models.service.IWorkerPlaceService;
+import com.axiomasoluciones.accidentinvestigation.models.service.IWorkPlaceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +20,7 @@ import java.util.stream.Collectors;
 public class WorkPlaceRestController {
 
     @Autowired
-    private IWorkerPlaceService service;
+    private IWorkPlaceService service;
 
     @GetMapping
     public ResponseEntity<List<WorkPlaceResponseDTO>> getAll() {
