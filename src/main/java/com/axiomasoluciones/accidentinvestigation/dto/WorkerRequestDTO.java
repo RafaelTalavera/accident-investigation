@@ -1,6 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.dto;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
+import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
 
 import java.time.LocalDate;
 

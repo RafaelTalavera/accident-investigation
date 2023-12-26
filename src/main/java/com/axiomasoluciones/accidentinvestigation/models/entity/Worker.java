@@ -37,9 +37,13 @@ public class Worker implements Serializable {
     @OneToMany(mappedBy = "worker", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Event> events;
 
+    @OneToMany(mappedBy = "worker", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Investigation> investigations;
+
     public Worker(WorkerRequestDTO workerRequestDTO){
         this.fullName = workerRequestDTO.fullName();
         this.birth = workerRequestDTO.birth();
+        this.entry = workerRequestDTO.entry();
         this.address = workerRequestDTO.address();
         this.events = workerRequestDTO.events();
     }

@@ -8,7 +8,7 @@ import java.util.List;
 public record WorkPlaceRequestDTO(
         String name,
         String sector,
-        List<Worker> workers,
-        List<Investigation> ivestigations
+        Long workersId,
+        Long ivestigationsId
 ) {
 }

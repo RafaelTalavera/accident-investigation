@@ -5,6 +5,7 @@ import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceRequestDTO;
 import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.Sector;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,23 +28,24 @@ public class WorkPlace implements Serializable {
     private String name;
     private String sector;
 
-    @JsonBackReference
+
     @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Worker> workers;
 
-    @JsonBackReference
+
     @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Investigation> investigations;
 
-    @JsonBackReference
+
     @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Event> events;
 
     public WorkPlace(WorkPlaceRequestDTO workPlaceRequestDTO){
         this.name = workPlaceRequestDTO.name();
         this.sector = workPlaceRequestDTO.sector();
-        this.investigations = workPlaceRequestDTO.ivestigations();
-        this.workers = workPlaceRequestDTO.workers();
+        this.investigations = investigations;
+        this.workers = workers;
+        this.events = events;
     }
 
     @Serial

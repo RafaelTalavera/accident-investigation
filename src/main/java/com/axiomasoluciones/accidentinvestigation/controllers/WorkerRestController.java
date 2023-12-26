@@ -54,7 +54,6 @@ public class WorkerRestController {
         }
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteWorker(@PathVariable Long id) {
         workerService.deleteById(id);
@@ -64,7 +63,6 @@ public class WorkerRestController {
     @PostMapping
     public ResponseEntity<WorkerResponseDTO> createWorker(@RequestBody WorkerRequestDTO data) {
         Optional<WorkPlace> workPlace = workPlaceService.findById(data.workPlaceId());
-
 
         if (workPlace.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

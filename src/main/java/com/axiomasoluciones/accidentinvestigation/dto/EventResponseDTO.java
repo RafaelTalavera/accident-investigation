@@ -33,9 +33,9 @@ public record EventResponseDTO(
                 event.getBodyPartsList(),
                 event.getInjuriesList(),
                 event.getImagen(),
-                event.getAditionalImagen(),  // Corregido el nombre del método
+                event.getAditionalImagen(),
                 event.getWorker().getId(),
-                event.getWorkPlace().getId()  // Usar getWorkPlace en lugar de getWorker para el lugar de trabajo
+                event.getWorkPlace().getId()
         );
     }
 }
