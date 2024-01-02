@@ -1,8 +1,5 @@
-package com.axiomasoluciones.accidentinvestigation.models.service;
+package com.axiomasoluciones.accidentinvestigation.services;
 
-import com.axiomasoluciones.accidentinvestigation.dto.WorkerRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.WorkerResponseDTO;
-import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Worker;
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +16,5 @@ public interface IWorkerService {
 
     Worker editWorker(Long id, Worker editedWorker);
 
+    void delete(Worker worker);
 }

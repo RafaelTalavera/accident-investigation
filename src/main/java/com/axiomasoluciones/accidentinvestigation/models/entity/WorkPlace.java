@@ -1,11 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
 
-import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceResponseDTO;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.Sector;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.axiomasoluciones.accidentinvestigation.dto.util.WorkPlaceRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +10,8 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -28,14 +26,14 @@ public class WorkPlace implements Serializable {
     private String name;
     private String sector;
 
+    private String adverseWeatherDetalis;
+    private Boolean adverseWeather;
 
-    @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Worker> workers;
+    private String lightingDetails;
+    private Boolean lighting;
 
-
-    @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Investigation> investigations;
-
+    private LocalDate inspectionDate;
+    private Boolean inspection;
 
     @OneToMany(mappedBy = "workPlace", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Event> events;
@@ -43,11 +41,18 @@ public class WorkPlace implements Serializable {
     public WorkPlace(WorkPlaceRequestDTO workPlaceRequestDTO){
         this.name = workPlaceRequestDTO.name();
         this.sector = workPlaceRequestDTO.sector();
-        this.investigations = investigations;
-        this.workers = workers;
-        this.events = events;
+        this.adverseWeatherDetalis = workPlaceRequestDTO.adverseWeatherDetalis();
+        this.adverseWeather = workPlaceRequestDTO.adverseWeather();
+        this.lightingDetails = workPlaceRequestDTO.lightingDetails();
+        this.lighting = workPlaceRequestDTO.lighting();
+        this.inspectionDate = workPlaceRequestDTO.inspectionDate();
+        this.inspection = workPlaceRequestDTO.inspection();
+
     }
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+
+
 }

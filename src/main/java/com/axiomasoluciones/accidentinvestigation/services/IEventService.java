@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.models.service;
+package com.axiomasoluciones.accidentinvestigation.services;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 
@@ -13,7 +13,9 @@ public interface IEventService {
 
     Event save(Event event);
 
-    public void deleteByIdEvent(Long id);
+    public void deleteById(Long id);
 
     Event editEvent(Long id, Event editedEvent);
+
+    void delete(Event event);
 }

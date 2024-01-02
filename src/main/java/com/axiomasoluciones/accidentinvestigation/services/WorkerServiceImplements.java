@@ -1,10 +1,7 @@
-package com.axiomasoluciones.accidentinvestigation.models.service;
+package com.axiomasoluciones.accidentinvestigation.services;
 
-import com.axiomasoluciones.accidentinvestigation.dto.WorkerRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.WorkerResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.dao.IWorkerDao;
-import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,12 +52,18 @@ public class WorkerServiceImplements implements IWorkerService {
 
         existingWorker.setFullName(editedWorker.getFullName());
         existingWorker.setBirth(editedWorker.getBirth());
-        existingWorker.setAddress(editedWorker.getAddress());
         existingWorker.setEntry(editedWorker.getEntry());
-        existingWorker.setWorkPlace(editedWorker.getWorkPlace());
+       // existingWorker.setWorkPlace(editedWorker.getWorkPlace());
         existingWorker.setEvents(editedWorker.getEvents());
 
         return workerDao.save(existingWorker);
+    }
+
+    @Override
+    public void delete(Worker worker) {
+
+        workerDao.delete(worker);
+
     }
 
 }

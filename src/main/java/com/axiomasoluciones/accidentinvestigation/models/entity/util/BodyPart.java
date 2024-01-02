@@ -1,6 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity.util;
 
-public enum BodyParts {
+public enum BodyPart {
     CABEZA,
     CUELLO,
     CARA,
@@ -13,5 +13,6 @@ public enum BodyParts {
     OJO,
     OIDO,
     ESPALDA,
-    COLUMNA
+    COLUMNA,
+    MULTIPLES
 }

@@ -1,12 +1,12 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
-import com.axiomasoluciones.accidentinvestigation.dto.WorkerRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.WorkerResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.util.WorkerRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.util.WorkerResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Worker;
-import com.axiomasoluciones.accidentinvestigation.models.service.IWorkPlaceService;
-import com.axiomasoluciones.accidentinvestigation.models.service.IWorkerService;
+import com.axiomasoluciones.accidentinvestigation.services.IWorkPlaceService;
+import com.axiomasoluciones.accidentinvestigation.services.IWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +22,6 @@ public class WorkerRestController {
 
     @Autowired
     private IWorkerService workerService;
-
-    @Autowired
-    private IWorkPlaceService workPlaceService;
 
     @GetMapping
     public ResponseEntity<List<WorkerResponseDTO>> getAll() {
@@ -62,18 +59,10 @@ public class WorkerRestController {
 
     @PostMapping
     public ResponseEntity<WorkerResponseDTO> createWorker(@RequestBody WorkerRequestDTO data) {
-        Optional<WorkPlace> workPlace = workPlaceService.findById(data.workPlaceId());
-
-        if (workPlace.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         Worker newWorker = new Worker(data);
-        newWorker.setWorkPlace(workPlace.get());
         workerService.save(newWorker);
         WorkerResponseDTO workerResponseDTO = new WorkerResponseDTO(newWorker);
         return new ResponseEntity<>(workerResponseDTO, HttpStatus.CREATED);
     }
 
 }
-
-

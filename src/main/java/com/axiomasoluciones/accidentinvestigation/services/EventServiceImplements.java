@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.models.service;
+package com.axiomasoluciones.accidentinvestigation.services;
 
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.dao.IEventDao;
@@ -36,7 +36,7 @@ public class EventServiceImplements implements IEventService {
 
     @Override
     @Transactional
-    public void deleteByIdEvent(Long id) {
+    public void deleteById(Long id) {
         Event existingEvent = eventDao.findById(id)
                         .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
 
@@ -52,11 +52,15 @@ public class EventServiceImplements implements IEventService {
         existEvent.setDescription(editedEvent.getDescription());
         existEvent.setSeverity(editedEvent.getSeverity());
         existEvent.setPoSeverity(editedEvent.getPoSeverity());
-        existEvent.setBodyPartsList(editedEvent.getBodyPartsList());
-        existEvent.setInjuriesList(editedEvent.getInjuriesList());
         existEvent.setImagen(editedEvent.getImagen());
         existEvent.setAditionalImagen(editedEvent.getAditionalImagen());
 
         return eventDao.save(existEvent);
+    }
+
+    @Override
+    public void delete(Event event) {
+        eventDao.delete(event);
+
     }
 }

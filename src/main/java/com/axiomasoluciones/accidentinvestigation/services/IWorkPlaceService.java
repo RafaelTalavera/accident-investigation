@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.models.service;
+package com.axiomasoluciones.accidentinvestigation.services;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
 
@@ -16,4 +16,6 @@ public interface IWorkPlaceService {
     public void deleteById(Long id);
 
     WorkPlace editWorkPlace(Long id, WorkPlace editedWorkPlace);
+
+    void delete(WorkPlace workPlace);
 }

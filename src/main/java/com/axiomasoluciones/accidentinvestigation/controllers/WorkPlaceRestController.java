@@ -1,11 +1,10 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
 
-import com.axiomasoluciones.accidentinvestigation.dto.WorkPlaceResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.util.WorkPlaceResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
-import com.axiomasoluciones.accidentinvestigation.models.service.IWorkPlaceService;
-
+import com.axiomasoluciones.accidentinvestigation.services.IWorkPlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class WorkPlaceRestController {
     @GetMapping
     public ResponseEntity<List<WorkPlaceResponseDTO>> getAll() {
         List<WorkPlace> workPlace = service.findAll();
-        if (!workPlace.isEmpty()) {
+        if (!((List<?>) workPlace).isEmpty()) {
             List<WorkPlaceResponseDTO> workPlaceResponseDTOs = workPlace.stream()
                     .map(WorkPlaceResponseDTO::new)
                     .collect(Collectors.toList());
@@ -41,7 +40,7 @@ public class WorkPlaceRestController {
     public ResponseEntity<WorkPlaceResponseDTO> getById(@PathVariable Long id) {
         Optional<WorkPlace> optionalWorkPlace = service.findById(id);
 
-        if (optionalWorkPlace.isPresent()) {
+        if (((Optional<?>) optionalWorkPlace).isPresent()) {
             WorkPlace workPlace = optionalWorkPlace.get();
             WorkPlaceResponseDTO workPlaceDTO = new WorkPlaceResponseDTO(workPlace);
             return new ResponseEntity<>(workPlaceDTO, HttpStatus.OK);
@@ -71,4 +70,3 @@ public class WorkPlaceRestController {
         return new ResponseEntity<>(workPlaceDTO, HttpStatus.OK);
     }
 }
-

@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.models.service;
+package com.axiomasoluciones.accidentinvestigation.services;
 
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.dao.IWorkPlaceDao;
@@ -45,10 +45,15 @@ public class WorkPlaceImplements implements IWorkPlaceService {
         // Realizar las modificaciones en la entidad existente
         existingWorkPlace.setName(editedWorkPlace.getName());
         existingWorkPlace.setSector(editedWorkPlace.getSector());
-        existingWorkPlace.setWorkers(editedWorkPlace.getWorkers());
-        existingWorkPlace.setInvestigations(editedWorkPlace.getInvestigations());
+       // existingWorkPlace.setWorkers(editedWorkPlace.getWorkers());
+       // existingWorkPlace.setInvestigations(editedWorkPlace.getInvestigations());
 
         // Guardar la entidad modificada
         return workPlaceDao.save(existingWorkPlace);
+    }
+
+    @Override
+    public void delete(WorkPlace workPlace) {
+        workPlaceDao.delete(workPlace);
     }
 }
