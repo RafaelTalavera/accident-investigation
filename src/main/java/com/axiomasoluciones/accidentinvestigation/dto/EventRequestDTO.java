@@ -1,12 +1,16 @@
-package com.axiomasoluciones.accidentinvestigation.dto.util;
+package com.axiomasoluciones.accidentinvestigation.dto;
 
+import com.axiomasoluciones.accidentinvestigation.models.entity.Organizational;
+import com.axiomasoluciones.accidentinvestigation.models.entity.WorkEquipment;
+import com.axiomasoluciones.accidentinvestigation.models.entity.WorkPlace;
+import com.axiomasoluciones.accidentinvestigation.models.entity.Worker;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.BodyPart;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.IncidentType;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.Injury;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.Severity;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 public record EventRequestDTO(
         LocalDateTime dateEvent,
@@ -18,10 +22,9 @@ public record EventRequestDTO(
         IncidentType incidenType,
         String imagen,
         String aditionalImagen,
-        Long workerId,
-        Long  workPlaceId,
-        Long organizacionalId,
-        Long workEquipementId
-
+        Worker worker,
+        WorkPlace workPlace,
+        Organizational organizacional,
+        WorkEquipment workEquipement
 ) {
 }

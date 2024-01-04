@@ -9,13 +9,13 @@ public interface IEventService {
 
     public List<Event> findAll();
 
-    Optional<Event> findById(Long id);
+    Optional<Event> findById(String id);
 
     Event save(Event event);
 
-    public void deleteById(Long id);
+    public void deleteById(String id);
 
-    Event editEvent(Long id, Event editedEvent);
+    Event editEvent(String id, Event editedEvent);
 
     void delete(Event event);
 }

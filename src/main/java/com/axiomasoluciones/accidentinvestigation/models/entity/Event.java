@@ -1,6 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
-import com.axiomasoluciones.accidentinvestigation.dto.util.EventRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.EventRequestDTO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.BodyPart;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.IncidentType;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.Injury;
@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import java.io.Serial;
@@ -21,12 +22,11 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Document
 public class Event implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(name="fecha")
     private LocalDateTime dateEvent;
@@ -40,21 +40,12 @@ public class Event implements Serializable {
     private String imagen;
     private String aditionalImagen;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worker_id")
     private Worker worker;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "work_Place_id")
     private WorkPlace workPlace;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "organizational_id")
     private Organizational organizationals;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "workEquipment")
     private WorkEquipment workEquipment;
 
     public Event(EventRequestDTO eventRequestDTO){
@@ -66,11 +57,10 @@ public class Event implements Serializable {
         this.incidenType = eventRequestDTO.incidenType();
         this.imagen = eventRequestDTO.imagen();
         this.aditionalImagen = eventRequestDTO.aditionalImagen();
-        this.worker = worker;
-        this.organizationals = organizationals;
-        this.workPlace = workPlace;
-        this.workEquipment=  workEquipment;
-
+        this.worker = eventRequestDTO.worker();
+        this.organizationals = eventRequestDTO.organizacional();
+        this.workPlace = eventRequestDTO.workPlace();
+        this.workEquipment=  eventRequestDTO.workEquipement();
     }
 
     @Serial

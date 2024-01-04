@@ -24,7 +24,7 @@ public class EventServiceImplements implements IEventService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Event> findById(Long id) {
+    public Optional<Event> findById(String id) {
         return eventDao.findById(id);
     }
 
@@ -36,7 +36,7 @@ public class EventServiceImplements implements IEventService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         Event existingEvent = eventDao.findById(id)
                         .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
 
@@ -44,7 +44,7 @@ public class EventServiceImplements implements IEventService {
     }
 
     @Override
-    public Event editEvent(Long id, Event editedEvent) {
+    public Event editEvent(String id, Event editedEvent) {
         Event existEvent = eventDao.findById(id)
                 .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
 

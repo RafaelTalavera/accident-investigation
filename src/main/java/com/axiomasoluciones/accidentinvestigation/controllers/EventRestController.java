@@ -1,8 +1,8 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
 
-import com.axiomasoluciones.accidentinvestigation.dto.util.EventRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.util.EventResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.EventRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.EventResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.*;
 import com.axiomasoluciones.accidentinvestigation.services.*;
@@ -15,24 +15,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-    @RequestMapping("/api/events")
+@RequestMapping("/api/events")
     public class EventRestController {
 
         @Autowired
         private IEventService eventService;
 
-        @Autowired
-        private IWorkerService workerService;
-
-        @Autowired
-        private IWorkPlaceService workPlaceService;
-
-        @Autowired
-        private IWorkEquipmetService workEquipmetService;
-
-        @Autowired
-        private IOrganizationalService organizationalService;
 
         @GetMapping
         public ResponseEntity<List<EventResponseDTO>> getAll(){
@@ -46,7 +36,7 @@ import java.util.stream.Collectors;
             }
         }
         @GetMapping("/{id}")
-        public ResponseEntity<EventResponseDTO> getById(@PathVariable Long id){
+        public ResponseEntity<EventResponseDTO> getById(@PathVariable String id){
             Optional<Event> optionalEvent = eventService.findById(id);
 
             if (optionalEvent.isPresent()){
@@ -59,28 +49,15 @@ import java.util.stream.Collectors;
         }
 
         @DeleteMapping("/{id}")
-        public ResponseEntity<String> delete(@PathVariable Long id){
+        public ResponseEntity<String> delete(@PathVariable String id){
             eventService.deleteById(id);
             return new ResponseEntity<>("Registro eliminado correctamente", HttpStatus.OK);
         }
 
         @PostMapping
         public ResponseEntity<EventResponseDTO> createEvent(@RequestBody EventRequestDTO data){
-            Optional<Worker> worker = workerService.findById(data.workerId());
-            Optional<WorkPlace> workPlace = workPlaceService.findById(data.workPlaceId());
-            Optional<WorkEquipment> workEquipment = workEquipmetService.findById(data.workEquipementId());
-            Optional<Organizational> organizational = organizationalService.findById(data.organizacionalId());
-
-
-            if (worker.isEmpty() || workPlace.isEmpty()){
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
 
             Event newEvent = new Event(data);
-            newEvent.setWorker(worker.get());
-            newEvent.setWorkPlace(workPlace.get());
-            newEvent.setWorkEquipment(workEquipment.get());
-            newEvent.setOrganizationals(organizational.get());
             eventService.save(newEvent);
             EventResponseDTO eventResponseDTO = new EventResponseDTO(newEvent);
             return new ResponseEntity<>(eventResponseDTO, HttpStatus.CREATED);
