@@ -17,19 +17,15 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkEquipment implements Serializable {
+public class Machine implements Serializable {
 
     private String name;
-    private String workEquipmentFailsDetalis;
-    private Boolean workEquipmentFails;
     private Energy energy;
-
-    private String defenseFailedDetails;
-    private Boolean defenseFailed;
-
-    private String correctUseEquimantDetails;
-    private Boolean correctUseEquimant;
-
+    private Boolean workEquipmentFails;
+    private Boolean defense;
+    private String defenseIntegrity;
+    private String correctUseEquimant;
+    private String locked;
 
     @Serial
     private static final long serialVersionUID = 1L;

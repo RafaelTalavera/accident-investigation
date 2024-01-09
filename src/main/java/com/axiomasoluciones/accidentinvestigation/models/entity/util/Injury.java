@@ -1,18 +1,16 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity.util;
 
 public enum Injury {
-    CORTE,
-    RASPADURA,
     CONTUSION,
+    CORTE,
+    EROISION,
+    ESGUINCE,
+    FISURA,
+    FRACTURA,
+    INTOXICACION,
     LACERACION,
     PERFORACION,
-    FRACTURA,
-    FISURA,
     QUEMADURAS,
-    ESGUINCE,
-    TORCEDURAS,
-    LESION,
-    INTOXICACION
-
+    TORCEDURAS
 
 }

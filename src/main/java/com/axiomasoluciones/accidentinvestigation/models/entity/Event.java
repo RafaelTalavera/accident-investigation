@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -29,7 +29,7 @@ public class Event implements Serializable {
     private String id;
 
     @Column(name="fecha")
-    private LocalDateTime dateEvent;
+    private LocalDate dateEvent;
 
     private String description;
     private Severity severity;
@@ -44,9 +44,11 @@ public class Event implements Serializable {
 
     private WorkPlace workPlace;
 
-    private Organizational organizationals;
+    private Method method;
 
-    private WorkEquipment workEquipment;
+    private Machine workEquipment;
+
+    private Activity activity;
 
     public Event(EventRequestDTO eventRequestDTO){
         this.dateEvent = eventRequestDTO.dateEvent();
@@ -58,9 +60,10 @@ public class Event implements Serializable {
         this.imagen = eventRequestDTO.imagen();
         this.aditionalImagen = eventRequestDTO.aditionalImagen();
         this.worker = eventRequestDTO.worker();
-        this.organizationals = eventRequestDTO.organizacional();
+        this.method = eventRequestDTO.organizacional();
         this.workPlace = eventRequestDTO.workPlace();
         this.workEquipment=  eventRequestDTO.workEquipement();
+        this.activity = eventRequestDTO.activity();
     }
 
     @Serial

@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
         @Autowired
         private IEventService eventService;
 
+      @Autowired
+       private EventServiceImplements eventServiceImplements;
+
 
         @GetMapping
         public ResponseEntity<List<EventResponseDTO>> getAll(){
@@ -35,6 +38,25 @@ import java.util.stream.Collectors;
                 throw new RegistroNoEncontradoException("No se encontró ningún registro en la base de datos.");
             }
         }
+
+    @GetMapping("/{id}/antiguedad-message")
+    public ResponseEntity<String> getAntiguedadMessageById(@PathVariable String id) {
+        try {
+            Optional<Event> optionalEvent = eventService.findById(id);
+
+            if (optionalEvent.isPresent()) {
+                Event event = optionalEvent.get();
+                String antiguedadMessage = eventServiceImplements.getAntiguedadMessageForEvent(event);
+                return ResponseEntity.ok(antiguedadMessage);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // Manejar cualquier excepción y devolver un ResponseEntity con un mensaje de error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener el mensaje de antigüedad.");
+        }
+    }
+
         @GetMapping("/{id}")
         public ResponseEntity<EventResponseDTO> getById(@PathVariable String id){
             Optional<Event> optionalEvent = eventService.findById(id);
@@ -62,5 +84,24 @@ import java.util.stream.Collectors;
             EventResponseDTO eventResponseDTO = new EventResponseDTO(newEvent);
             return new ResponseEntity<>(eventResponseDTO, HttpStatus.CREATED);
         }
+
+    @GetMapping("/{id}/case1-message")
+    public ResponseEntity<String> getCase1MessageById(@PathVariable String id) {
+        try {
+            Optional<Event> optionalEvent = eventService.findById(id);
+
+            if (optionalEvent.isPresent()) {
+                Event event = optionalEvent.get();
+                String case1Message = eventServiceImplements.getCase1ById(id);
+                return ResponseEntity.ok(case1Message);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // Handle any exception and return a ResponseEntity with an error message
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener el mensaje del caso 1.");
+        }
     }
+
+}
 

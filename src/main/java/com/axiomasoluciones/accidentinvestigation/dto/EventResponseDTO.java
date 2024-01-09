@@ -6,12 +6,13 @@ import com.axiomasoluciones.accidentinvestigation.models.entity.util.IncidentTyp
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.Injury;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.Severity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 
 public record EventResponseDTO(
         String id,
-        LocalDateTime dateEvent,
+        LocalDate dateEvent,
         String description,
         Severity severity,
         Severity poSeverity,
@@ -22,8 +23,9 @@ public record EventResponseDTO(
         String aditionalImagen,
         Worker worker,
         WorkPlace workPlace,
-        Organizational organizacional,
-        WorkEquipment workEquipement
+        Method organizacional,
+        Machine workEquipement,
+        Activity activity
 ) {
     public EventResponseDTO(Event event){
         this(
@@ -39,9 +41,9 @@ public record EventResponseDTO(
                 event.getAditionalImagen(),
                 event.getWorker(),
                 event.getWorkPlace(),
-                event.getOrganizationals(),
-                event.getWorkEquipment()
-
+                event.getMethod(),
+                event.getWorkEquipment(),
+                event.getActivity()
         );
     }
 }

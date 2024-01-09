@@ -18,4 +18,9 @@ public interface IEventService {
     Event editEvent(String id, Event editedEvent);
 
     void delete(Event event);
+
+    String getAntiguedadMessageById(String id);
+
+    String getCase1ById(String id);
+
 }
