@@ -14,18 +14,28 @@ import java.io.Serializable;
 public class Activity implements Serializable {
 
     //PhysicsCap
-    //fuerza
+    //La tarea requeria fuerza
     private String strength;
-
+    //La tarea requeria atención
     private String attention;
+    //Tarea repetitiva
     private String repetition;
+    //Que movilidad requeria la tarea
     private String mobility;
+    //Que nivel de presición requeria la terea
     private String precision;
+    //Trabajo en Altura
     private Boolean height;
+    //Trabajo en espacio confinadi
     private Boolean confinedSpace;
 
     //La actividad requeria bloqueo de equipo
     private Boolean locked;
+
+    //La realizo el bloqueo
+    private Boolean lokedUsed;
+
+
 
     private static final long serialVersionUID = 1L;
 

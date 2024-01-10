@@ -22,8 +22,8 @@ public record EventRequestDTO(
         String aditionalImagen,
         Worker worker,
         WorkPlace workPlace,
-        Method organizacional,
-        Machine workEquipement,
+        Method method,
+        Machine machine,
         Activity activity
 ) {
 }

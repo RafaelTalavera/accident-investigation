@@ -3,6 +3,10 @@ package com.axiomasoluciones.accidentinvestigation.services;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.dao.IEventDao;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
+import com.axiomasoluciones.accidentinvestigation.services.logica.Case1;
+import com.axiomasoluciones.accidentinvestigation.services.logica.Case2;
+import com.axiomasoluciones.accidentinvestigation.services.logica.Case3;
+import com.axiomasoluciones.accidentinvestigation.services.logica.Case4;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,77 +94,37 @@ public class EventServiceImplements implements IEventService {
             long monthsDifferenceEntry = ChronoUnit.MONTHS.between(entryDate, currentDate);
 
 
-            // bloque if para verificar si la persona tiene menos de 6 meses de antigüedad
-            if (event.getWorker().getExperience() != null
-                    && event.getWorker().getExperience() < 6
-                    && event.getWorker().getHoursWorked() != null
-                    && event.getWorker().getHoursWorked() < 8
-                    && event.getWorker().getTrainingDate() != null
-                    && ChronoUnit.MONTHS.between(event.getWorker().getTrainingDate(), currentDate) < 6
-                    && !event.getWorker().getAccidentHistory()
-                    && event.getMethod().getEppUseds() != null
-                    && event.getMethod().getEppUseds()
-                    && event.getMethod().getAuthorization() != null
-                    && event.getMethod().getAuthorization()
-                    && event.getMethod().getAuthorizationWork() != null
-                    && event.getMethod().getAuthorizationWork()
-                    && event.getMethod().getPts() != null
-                    && event.getMethod().getPts()
-                    && event.getMethod().getPtsApplied() != null
-                    && event.getMethod().getPtsApplied()
-                    && event.getMethod().getExpectedBehavior()!= null
-                    && event.getMethod().getExpectedBehavior()
-                    && event.getActivity().getStrength() != null
-                    && event.getActivity().getStrength().equalsIgnoreCase("baja")
-                    && event.getActivity().getAttention()!= null
-                    && event.getActivity().getAttention().equalsIgnoreCase("baja")
-                    && event.getActivity().getMobility()!= null
-                    && event.getActivity().getMobility().equalsIgnoreCase("baja")
-                    && event.getActivity().getPrecision()!= null
-                    && event.getActivity().getPrecision().equalsIgnoreCase("baja")
-                    && event.getActivity().getRepetition()!= null
-                    && event.getActivity().getRepetition().equalsIgnoreCase("baja")
-                    && event.getActivity().getHeight()!= null
-                    && !event.getActivity().getHeight()
-                    && event.getActivity().getConfinedSpace() != null
-                    && ! event.getActivity().getConfinedSpace()
-                    && event.getActivity().getLocked()!= null
-                    && !event.getActivity().getLocked()
-            ) {
+            Case1 caseInstance1 = new Case1();
+            Case2 caseInstance2 = new Case2();
+            Case3 caseInstance3 = new Case3();
+            Case4 caseInstance4 = new Case4();
+
+            String case1 = caseInstance1.case1(event);
+            String case2 = caseInstance2.case2(event);
+            String case3 = caseInstance3.case3(event);
+            String case4 = caseInstance4.case4(event);
 
 
-                return "Experiencia: " + event.getWorker().getExperience() + " meses"+
-                        " --Horas trabajadas: " + event.getWorker().getHoursWorked() +
-                        " --Accidentes: " + event.getWorker().getAccidentHistory() +
-                        " --Tiempo Ultima capacitacion: " + ChronoUnit.MONTHS.between(event.getWorker().getTrainingDate(), currentDate) +
-                        " --la terea requeria autorización: " + event.getMethod().getAuthorization() +
-                        " --El trabajador estaba autorizado: " + event.getMethod().getAuthorizationWork() +
-                        " --EPP asignados: " + event.getMethod().getEppDesignated() +
-                        " --Uso los EPP: " + event.getMethod().getEppUseds() +
-                        " --La terea tiene PTS: " + event.getMethod().getPts() +
-                        " --El trabajador aplico el PTS: " + event.getMethod().getPtsApplied()
-                        + " caso 1 nada falla solo la antiguedad es menor a 6 meses";
 
+            // Llamar a los métodos específicos y obtener los resultados
 
+            if (!case1.equals("case1")) {
+                return case1;
             }
-            // Bloque original para verificar si la persona cumple con otras condiciones
-            else if (monthsDifferenceEntry > 6
-                    && event.getWorker().getExperience() != null
-                    && event.getWorker().getExperience() > 6
-                    && event.getWorker().getHoursWorked() != null
-                    && event.getWorker().getHoursWorked() > 6
-                    && event.getWorker().getTrainingDate() != null
-                    && ChronoUnit.MONTHS.between(event.getWorker().getTrainingDate(), currentDate) < 6
-                    && event.getWorker().getAccidentHistory()
-                    && event.getMethod().getAuthorization() != null
-                    && event.getMethod().getAuthorization()
-                    && event.getMethod().getAuthorizationWork() != null
-                    && !event.getMethod().getAuthorizationWork()) {
 
-                return "La persona era consciente de lo que hacía e infringió una norma de seguridad";
-            } else {
-                return "No se cumplió";
+            if (!case2.equals("case2")) {
+                return case2;
             }
+
+            if (!case3.equals("case3")) {
+                return case3;
+            }
+
+            if (!case4.equals("case4")) {
+                return case4;
+            }
+            
+            return "No se cumplió";
         } else {
             return "No ingresó antigüedad para este worker";
         }

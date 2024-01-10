@@ -26,11 +26,14 @@ public class Worker implements Serializable {
     private LocalDate birth;
     private LocalDate entry;
     private WorkOccasion workOccasion;
-    private Long experience;
     private Long hoursWorked;
     private LocalDate trainingDate;
+    //La persona ya estuvo accidentes
     private Boolean accidentHistory;
+    //Fecha de Inspeccion
     private LocalDate dateAccidentHistory;
+    //Fue un acto voluntario
+    private Boolean volunteer;
 
     @Serial
     private static final long serialVersionUID = 1L;

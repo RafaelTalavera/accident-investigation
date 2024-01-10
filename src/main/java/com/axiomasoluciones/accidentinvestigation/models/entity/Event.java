@@ -41,14 +41,10 @@ public class Event implements Serializable {
     private String aditionalImagen;
 
     private Worker worker;
-
     private WorkPlace workPlace;
-
     private Method method;
-
-    private Machine workEquipment;
-
     private Activity activity;
+    private Machine machine;
 
     public Event(EventRequestDTO eventRequestDTO){
         this.dateEvent = eventRequestDTO.dateEvent();
@@ -60,10 +56,11 @@ public class Event implements Serializable {
         this.imagen = eventRequestDTO.imagen();
         this.aditionalImagen = eventRequestDTO.aditionalImagen();
         this.worker = eventRequestDTO.worker();
-        this.method = eventRequestDTO.organizacional();
+        this.method = eventRequestDTO.method();
         this.workPlace = eventRequestDTO.workPlace();
-        this.workEquipment=  eventRequestDTO.workEquipement();
+        this.machine=  eventRequestDTO.machine();
         this.activity = eventRequestDTO.activity();
+        this.machine = eventRequestDTO.machine();
     }
 
     @Serial

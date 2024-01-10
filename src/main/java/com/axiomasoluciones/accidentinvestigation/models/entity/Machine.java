@@ -21,11 +21,17 @@ public class Machine implements Serializable {
 
     private String name;
     private Energy energy;
+
+    //El equipo tenia alguna falla
     private Boolean workEquipmentFails;
+    //El equipo tenia protecciones a partes energizadas
     private Boolean defense;
-    private String defenseIntegrity;
-    private String correctUseEquimant;
-    private String locked;
+    // Cual era el estado de las protecciones
+    private Boolean defenseIntegrity;
+    // El equipo estaba siendo usado para lo que fue diseñado
+    private Boolean correctUseEquimant;
+    //El equipo tenia posibilidad de bloquear la energia
+    private Boolean locked;
 
     @Serial
     private static final long serialVersionUID = 1L;

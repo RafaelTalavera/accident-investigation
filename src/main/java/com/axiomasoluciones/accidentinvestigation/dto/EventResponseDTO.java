@@ -23,8 +23,8 @@ public record EventResponseDTO(
         String aditionalImagen,
         Worker worker,
         WorkPlace workPlace,
-        Method organizacional,
-        Machine workEquipement,
+        Method method,
+        Machine machine,
         Activity activity
 ) {
     public EventResponseDTO(Event event){
@@ -42,7 +42,7 @@ public record EventResponseDTO(
                 event.getWorker(),
                 event.getWorkPlace(),
                 event.getMethod(),
-                event.getWorkEquipment(),
+                event.getMachine(),
                 event.getActivity()
         );
     }

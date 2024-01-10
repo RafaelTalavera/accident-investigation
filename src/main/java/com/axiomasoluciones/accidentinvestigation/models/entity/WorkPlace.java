@@ -17,6 +17,7 @@ public class WorkPlace implements Serializable {
 
     private String name;
     private String sector;
+    private Boolean inside;
     private Weather weather;
     private String lighting;
     private String noise;
