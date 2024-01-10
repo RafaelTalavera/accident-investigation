@@ -3,10 +3,7 @@ package com.axiomasoluciones.accidentinvestigation.services;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.dao.IEventDao;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
-import com.axiomasoluciones.accidentinvestigation.services.logica.Case1;
-import com.axiomasoluciones.accidentinvestigation.services.logica.Case2;
-import com.axiomasoluciones.accidentinvestigation.services.logica.Case3;
-import com.axiomasoluciones.accidentinvestigation.services.logica.Case4;
+import com.axiomasoluciones.accidentinvestigation.services.logica.tensionFisica.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,35 +91,29 @@ public class EventServiceImplements implements IEventService {
             long monthsDifferenceEntry = ChronoUnit.MONTHS.between(entryDate, currentDate);
 
 
-            Case1 caseInstance1 = new Case1();
-            Case2 caseInstance2 = new Case2();
-            Case3 caseInstance3 = new Case3();
-            Case4 caseInstance4 = new Case4();
+            Case1AntiMeSeisTenFiBaja caseInstance1 = new Case1AntiMeSeisTenFiBaja();
+            Case2AntiMaSeisTenFiBaja caseInstance2 = new Case2AntiMaSeisTenFiBaja();
+            Case3AntiMaSeisTenFiBajaMaOchoTrabajadas caseInstance3 = new Case3AntiMaSeisTenFiBajaMaOchoTrabajadas();
+            Case4AntiMaSeisTenFiMediaMaOchoTraFuerMedia caseInstance4 = new Case4AntiMaSeisTenFiMediaMaOchoTraFuerMedia();
+            Case5AntiMaSeisTenFiMediaOchoTraFuerzaMeMovilidadMe caseInstance5 = new Case5AntiMaSeisTenFiMediaOchoTraFuerzaMeMovilidadMe();
+            Case6AntiMaSeisTenFiMediaOchoTraFuerzaAltaMovilidadAlta caseInstance6 = new Case6AntiMaSeisTenFiMediaOchoTraFuerzaAltaMovilidadAlta();
 
             String case1 = caseInstance1.case1(event);
             String case2 = caseInstance2.case2(event);
             String case3 = caseInstance3.case3(event);
             String case4 = caseInstance4.case4(event);
+            String case5 = caseInstance5.case5(event);
+            String case6 = caseInstance6.case6(event);
 
 
+            
 
-            // Llamar a los métodos específicos y obtener los resultados
-
-            if (!case1.equals("case1")) {
-                return case1;
-            }
-
-            if (!case2.equals("case2")) {
-                return case2;
-            }
-
-            if (!case3.equals("case3")) {
-                return case3;
-            }
-
-            if (!case4.equals("case4")) {
-                return case4;
-            }
+            if (!case1.equals("case1")) {return case1;}
+            if (!case2.equals("case2")) {return case2;}
+            if (!case3.equals("case3")) {return case3;}
+            if (!case4.equals("case4")) {return case4;}
+            if (!case5.equals("case5")) {return case5;}
+            if (!case6.equals("case6")) {return case6;}
             
             return "No se cumplió";
         } else {

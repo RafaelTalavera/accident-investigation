@@ -1,13 +1,12 @@
-package com.axiomasoluciones.accidentinvestigation.services.logica;
+package com.axiomasoluciones.accidentinvestigation.services.logica.tensionFisica;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Case4 {
-
-    public String case4(Event event) {
+public class Case5AntiMaSeisTenFiMediaOchoTraFuerzaMeMovilidadMe {
+    public String case5(Event event) {
         LocalDate entryDate = event.getWorker().getEntry();
         LocalDate currentDate = event.getDateEvent();
         if (
@@ -31,13 +30,13 @@ public class Case4 {
                         && event.getMethod().getExpectedBehavior() != null
                         && event.getMethod().getExpectedBehavior() // verdadero actuo como se esperaba
 
-                        //Tensión Física o Fisiológica baja
+                        //Tensión Física o Fisiológica Media
                         && event.getWorker().getHoursWorked() != null
                         && event.getWorker().getHoursWorked() > 8
                         && event.getActivity().getStrength() != null
                         && event.getActivity().getStrength().equalsIgnoreCase("media")
                         && event.getActivity().getMobility() != null
-                        && event.getActivity().getMobility().equalsIgnoreCase("baja")
+                        && event.getActivity().getMobility().equalsIgnoreCase("media")
 
 
                         //Tensión mental o psicológica baja
@@ -79,9 +78,9 @@ public class Case4 {
                         && event.getWorkPlace().getInspection()
                         && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2) {
             return "Tensión Física o Fisiológica MEDIA: "  + event.getWorker().getHoursWorked() +" horas trabajadas "
-                    +"-----Tipo de fuerza requerida: "+ event.getActivity().getStrength() ;
+                    +"-----Tipo de fuerza requerida: "+ event.getActivity().getStrength() +
+                    " -----Tipo de movilidad: " + event.getActivity().getMobility();
         }
-        return "case4";
+        return "case5";
     }
 }
-

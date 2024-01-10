@@ -1,19 +1,19 @@
-package com.axiomasoluciones.accidentinvestigation.services.logica;
+package com.axiomasoluciones.accidentinvestigation.services.logica.tensionFisica;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Case1 {
+public class Case4AntiMaSeisTenFiMediaMaOchoTraFuerMedia {
 
-    public String case1(Event event) {
+    public String case4(Event event) {
         LocalDate entryDate = event.getWorker().getEntry();
         LocalDate currentDate = event.getDateEvent();
         if (
-                //habilidades / entrenamiento
+            //habilidades / entrenamiento
                 event.getWorker().getEntry() != null
-                        && ChronoUnit.MONTHS.between(event.getWorker().getEntry(), currentDate) < 6
+                        && ChronoUnit.MONTHS.between(event.getWorker().getEntry(), currentDate) > 6
                         && event.getWorker().getTrainingDate() != null
                         && ChronoUnit.MONTHS.between(event.getWorker().getTrainingDate(), currentDate) < 6
                         && !event.getWorker().getAccidentHistory()
@@ -33,9 +33,9 @@ public class Case1 {
 
                         //Tensión Física o Fisiológica baja
                         && event.getWorker().getHoursWorked() != null
-                        && event.getWorker().getHoursWorked() < 8
+                        && event.getWorker().getHoursWorked() > 8
                         && event.getActivity().getStrength() != null
-                        && event.getActivity().getStrength().equalsIgnoreCase("baja")
+                        && event.getActivity().getStrength().equalsIgnoreCase("media")
                         && event.getActivity().getMobility() != null
                         && event.getActivity().getMobility().equalsIgnoreCase("baja")
 
@@ -78,10 +78,10 @@ public class Case1 {
                         && event.getWorkPlace().getInspection() != null
                         && event.getWorkPlace().getInspection()
                         && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2) {
-            return "habilidades/entrenamiento: La persona tiene menos de 6 meses de experiencia ----- Tensión Física o Fisiológica: Baja " +
-                    "------Estándares de trabajo adecuado------Tensión mental o psicológica baja------Ingeniería adecuada---Medioambiente Adecuado" ;
+            return "Tensión Física o Fisiológica MEDIA: "  + event.getWorker().getHoursWorked() +" horas trabajadas "
+                    +"-----Tipo de fuerza requerida: "+ event.getActivity().getStrength() ;
         }
-
-        return "case1";
+        return "case4";
     }
 }
+

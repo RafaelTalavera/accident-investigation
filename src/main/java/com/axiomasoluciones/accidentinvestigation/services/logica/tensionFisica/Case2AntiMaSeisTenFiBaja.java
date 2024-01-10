@@ -1,11 +1,11 @@
-package com.axiomasoluciones.accidentinvestigation.services.logica;
+package com.axiomasoluciones.accidentinvestigation.services.logica.tensionFisica;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Case2 {
+public class Case2AntiMaSeisTenFiBaja {
 
     public String case2(Event event) {
         LocalDate entryDate = event.getWorker().getEntry();
