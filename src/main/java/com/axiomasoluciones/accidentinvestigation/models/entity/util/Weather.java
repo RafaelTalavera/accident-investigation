@@ -6,14 +6,11 @@ package com.axiomasoluciones.accidentinvestigation.models.entity.util;
         ALTA_TEMPERATURA,
         BAJA_TEMPERATURA,
         GRANIZO,
-        HUMEDAD,
-        INDICE_UV,
+        HUMEDAD_ALTA,
         NEBLINA,
         NORMAL,
-        NUBOSIDAD,
+        NUBOSIDAD_ALTA,
         PRECIPITACION,
-        PRESION_ATMOSFERICA,
         TORMENTA,
-        TORNADO,
         VIENTO
     }
