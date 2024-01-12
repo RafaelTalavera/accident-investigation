@@ -20,12 +20,13 @@ public class Case1 {
                         && !event.getWorker().getAccidentHistory()
                         && event.getWorker().getVolunteer()
                         //MedioAmbiente adecuado
-                     && event.getWorkPlace().getInside()
+                        && event.getWorkPlace().getInside()
                         && event.getWorkPlace().getLighting().equalsIgnoreCase("alto")
                         && event.getWorkPlace().getNoise().equalsIgnoreCase("bajo")
                         && event.getWorkPlace().getInspection()
                         && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2
                         //Metodo exigencia bajo
+                        && event.getMethod().getEppDesignated()
                         && event.getMethod().getEppUseds()
                         && event.getMethod().getAuthorization()
                         && event.getMethod().getAuthorizationWork()

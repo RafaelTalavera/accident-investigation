@@ -25,6 +25,7 @@ public class Case7 {
                         && event.getWorkPlace().getInspection()
                         && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2
                         //Metodo exigencia bajo
+                        && event.getMethod().getEppDesignated()
                         && event.getMethod().getEppUseds()
                         && event.getMethod().getAuthorization()
                         && event.getMethod().getAuthorizationWork()
