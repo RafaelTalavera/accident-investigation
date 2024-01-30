@@ -1,5 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
+import com.axiomasoluciones.accidentinvestigation.dto.UserRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.UserResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.security.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -27,11 +29,18 @@ public class User implements UserDetails {
     private String id;
     private String username;
     private String password;
-    private String mail;
+    private String email;
 
     //Esta anotación es para que en vez de guardar el valor ordinal traiga el nombre.
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public User(UserRequestDTO userRequestDTO) {
+        this.username = userRequestDTO.username();
+        this.email = userRequestDTO.email();
+        this.password = userRequestDTO.password();
+        this.role = userRequestDTO.role();
+    }
 
 
     @Override

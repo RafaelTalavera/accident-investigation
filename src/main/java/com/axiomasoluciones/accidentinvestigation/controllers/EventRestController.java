@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
         @Autowired
         private IEventService eventService;
 
-      @Autowired
-       private EventServiceImplements eventServiceImplements;
+        @Autowired
+        private EventServiceImplements eventServiceImplements;
 
 
         @GetMapping
