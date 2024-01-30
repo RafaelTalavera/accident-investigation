@@ -1,6 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.Weather;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Weather;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

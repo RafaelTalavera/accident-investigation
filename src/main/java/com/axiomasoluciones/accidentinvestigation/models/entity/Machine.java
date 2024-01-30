@@ -1,7 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
 
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.Energy;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Energy;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

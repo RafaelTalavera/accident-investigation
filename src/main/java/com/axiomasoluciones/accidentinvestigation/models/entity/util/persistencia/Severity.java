@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.models.entity.util;
+package com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia;
 
 public enum Severity {
     CASI,

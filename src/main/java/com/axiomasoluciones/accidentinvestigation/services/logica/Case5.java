@@ -5,7 +5,7 @@ import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import static com.axiomasoluciones.accidentinvestigation.models.entity.util.WorkOccasion.TAREAS_PROPIAS_RUTINA;
+import static com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.WorkOccasion.TAREAS_PROPIAS_RUTINA;
 
 public class Case5 {
 

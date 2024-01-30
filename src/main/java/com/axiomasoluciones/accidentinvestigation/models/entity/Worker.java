@@ -3,8 +3,7 @@ package com.axiomasoluciones.accidentinvestigation.models.entity;
 
 
 
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.*;
-
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.WorkOccasion;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +12,6 @@ import lombok.Setter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-
-import java.util.Date;
 
 
 @Getter

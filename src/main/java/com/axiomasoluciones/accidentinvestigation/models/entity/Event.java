@@ -1,10 +1,10 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
 import com.axiomasoluciones.accidentinvestigation.dto.EventRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.BodyPart;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.IncidentType;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.Injury;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.Severity;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.BodyPart;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.IncidentType;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Injury;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Severity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
