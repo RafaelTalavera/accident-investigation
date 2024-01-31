@@ -7,6 +7,9 @@ import com.axiomasoluciones.accidentinvestigation.models.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -39,14 +42,11 @@ public class AuthenticationService {
 
     }
     private Map<String, Object> generateExtraClaims(User user){
-
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("mail", user.getEmail());
         extraClaims.put("role", user.getRole().name());
         extraClaims.put("permissions", user.getAuthorities());
-
         return extraClaims;
-
     }
 
 }

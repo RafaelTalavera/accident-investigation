@@ -21,6 +21,10 @@ public class EventServiceImplements implements IEventService {
     @Autowired
     private IEventDao eventDao;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
+
     @Override
     @Transactional(readOnly = true)
     public List<Event> findAll() {

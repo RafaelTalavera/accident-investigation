@@ -25,7 +25,8 @@ public record EventResponseDTO(
         WorkPlace workPlace,
         Method method,
         Machine machine,
-        Activity activity
+        Activity activity,
+        String userId
 ) {
     public EventResponseDTO(Event event){
         this(
@@ -43,7 +44,8 @@ public record EventResponseDTO(
                 event.getWorkPlace(),
                 event.getMethod(),
                 event.getMachine(),
-                event.getActivity()
+                event.getActivity(),
+                event.getUserId()
         );
     }
 }

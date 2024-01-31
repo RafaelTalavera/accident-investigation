@@ -6,9 +6,14 @@ import com.axiomasoluciones.accidentinvestigation.dto.EventResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.*;
 import com.axiomasoluciones.accidentinvestigation.services.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +30,9 @@ import java.util.stream.Collectors;
 
         @Autowired
         private EventServiceImplements eventServiceImplements;
+
+        @Value("${security.jwt.secret-key}")
+        private String SECRET_KEY;
 
 
         @GetMapping
@@ -76,14 +84,41 @@ import java.util.stream.Collectors;
             return new ResponseEntity<>("Registro eliminado correctamente", HttpStatus.OK);
         }
 
+        @PreAuthorize("hasAuthority('SAVE_ONE_ITEMS')")
         @PostMapping
-        public ResponseEntity<EventResponseDTO> createEvent(@RequestBody EventRequestDTO data){
+        public ResponseEntity<EventResponseDTO> createEvent
+                (@RequestBody EventRequestDTO data, HttpServletRequest request ){
+
+            String token = request.getHeader("Authorization");
+
+            System.out.println(token);
+
+            String userEmail = extractUserEmailFromToken(token);
 
             Event newEvent = new Event(data);
+            newEvent.setUserId(userEmail);
             eventService.save(newEvent);
             EventResponseDTO eventResponseDTO = new EventResponseDTO(newEvent);
             return new ResponseEntity<>(eventResponseDTO, HttpStatus.CREATED);
         }
+
+    private String extractUserEmailFromToken(String token) {
+        try {
+            // Remover la palabra "Bearer " del inicio del token
+            String jwtToken = token.replace("Bearer ", "");
+
+            // Decodificar el token JWT
+            Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwtToken).getBody();
+
+            System.out.println(claims);
+            return claims.get("mail", String.class);
+        } catch (Exception e) {
+            // Manejar la excepción según tus necesidades
+            throw new RuntimeException("Error al extraer el correo electrónico del token", e);
+        }
+    }
+
+
 
     @GetMapping("/{id}/case1-message")
     public ResponseEntity<String> getCase1MessageById(@PathVariable String id) {

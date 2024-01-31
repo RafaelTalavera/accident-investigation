@@ -23,6 +23,7 @@ public record EventRequestDTO(
         WorkPlace workPlace,
         Method method,
         Machine machine,
-        Activity activity
+        Activity activity,
+        String userId
 ) {
 }

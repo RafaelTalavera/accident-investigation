@@ -46,6 +46,8 @@ public class Event implements Serializable {
     private Activity activity;
     private Machine machine;
 
+    private String userId;
+
     public Event(EventRequestDTO eventRequestDTO){
         this.dateEvent = eventRequestDTO.dateEvent();
         this.description = eventRequestDTO.description();
