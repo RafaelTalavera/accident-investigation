@@ -60,6 +60,11 @@ public class EventServiceImplements implements IEventService {
     }
 
     @Override
+    public List<Event> findByUserId(String userId) {
+        return eventDao.findEventByUserId(userId);
+    }
+
+    @Override
     @Transactional
     public void deleteById(String id) {
         Event existingEvent = eventDao.findById(id)

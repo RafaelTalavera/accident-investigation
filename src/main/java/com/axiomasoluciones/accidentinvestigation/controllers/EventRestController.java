@@ -38,6 +38,27 @@ import java.util.stream.Collectors;
             }
         }
 
+
+    @GetMapping("/list")
+    public ResponseEntity<List<EventResponseDTO>> getAll(HttpServletRequest request) {
+        try {
+            String token = request.getHeader("Authorization");
+            String userEmail = eventService.extractUserEmailFromToken(token);
+
+            List<Event> events = eventService.findByUserId(userEmail);
+
+            if (!events.isEmpty()) {
+                List<EventResponseDTO> eventResponseDTOS = events.stream()
+                        .map(EventResponseDTO::new).collect(Collectors.toList());
+                return new ResponseEntity<>(eventResponseDTOS, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
    /* @GetMapping("/{id}/antiguedad-message")
     public ResponseEntity<String> getAntiguedadMessageById(@PathVariable String id) {
         try {

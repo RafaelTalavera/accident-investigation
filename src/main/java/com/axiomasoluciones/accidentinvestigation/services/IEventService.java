@@ -21,6 +21,8 @@ public interface IEventService {
 
     String extractUserEmailFromToken(String token);
 
+    public List<Event> findByUserId(String userId);
+
 
 
   /*  String getAntiguedadMessageById(String id);
