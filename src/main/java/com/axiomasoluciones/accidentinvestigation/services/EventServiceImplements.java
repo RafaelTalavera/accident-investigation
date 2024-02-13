@@ -3,15 +3,15 @@ package com.axiomasoluciones.accidentinvestigation.services;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.dao.IEventDao;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
-import com.axiomasoluciones.accidentinvestigation.services.logica.*;
 
-import com.axiomasoluciones.accidentinvestigation.services.logica.height.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +23,9 @@ public class EventServiceImplements implements IEventService {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Value("${security.jwt.secret-key}")
+    private String SECRET_KEY;
 
 
     @Override
@@ -45,9 +48,22 @@ public class EventServiceImplements implements IEventService {
 
     @Override
     @Transactional
+    public String extractUserEmailFromToken(String token) {
+            try {
+                // Remover la palabra "Bearer " del inicio del token
+                String jwtToken = token.replace("Bearer ", "");
+                Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwtToken).getBody();
+                return claims.get("mail", String.class);
+            } catch (Exception e) {
+                throw new RuntimeException("Error al extraer el correo electrónico del token", e);
+            }
+    }
+
+    @Override
+    @Transactional
     public void deleteById(String id) {
         Event existingEvent = eventDao.findById(id)
-                        .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
+                .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
 
         eventDao.deleteById(id);
     }
@@ -58,21 +74,22 @@ public class EventServiceImplements implements IEventService {
                 .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
 
         existEvent.setDateEvent(editedEvent.getDateEvent());
-        existEvent.setDescription(editedEvent.getDescription());
         existEvent.setSeverity(editedEvent.getSeverity());
-        existEvent.setPoSeverity(editedEvent.getPoSeverity());
-        existEvent.setImagen(editedEvent.getImagen());
-        existEvent.setAditionalImagen(editedEvent.getAditionalImagen());
+
 
         return eventDao.save(existEvent);
     }
 
     @Override
     public void delete(Event event) {
-        eventDao.delete(event);}
+        eventDao.delete(event);
+    }
+}
 
 
-    @Override
+
+
+  /*  @Override
     @Transactional(readOnly = true)
     public String getAntiguedadMessageById(String id) {
         Event event = eventDao.findById(id)
@@ -355,6 +372,8 @@ public class EventServiceImplements implements IEventService {
 
 
 
+
+
             return "No corresponde a ni un caso evaluado";
         } else {
             return "No ingresó antigüedad para este worker";
@@ -366,7 +385,7 @@ public class EventServiceImplements implements IEventService {
 
 
 
-    private String getAntiguedadMessage(Event event) {
+   private String getAntiguedadMessage(Event event) {
         if (event.getWorker() != null && event.getWorker().getEntry() != null) {
             LocalDate entryDate = event.getWorker().getEntry();
             LocalDate currentDate = event.getDateEvent();
@@ -388,3 +407,10 @@ public class EventServiceImplements implements IEventService {
     }
 
 }
+
+
+
+
+
+
+   */

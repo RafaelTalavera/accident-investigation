@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
@@ -17,6 +18,7 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PreAuthorize("permitAll")
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponseDTO> login(
@@ -25,6 +27,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(jwtDto);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PreAuthorize("permitAll")
     @GetMapping("/public-access")
     public String publicAccessEndpoint(){

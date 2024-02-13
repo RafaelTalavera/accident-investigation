@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.services.logica;
+/*package com.axiomasoluciones.accidentinvestigation.services.logica;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 
@@ -12,21 +12,21 @@ public class Case9 {
 
     public String case9(Event event) {
         LocalDate currentDate = event.getDateEvent();
-        if (
+     /*   if (
             //habilidades entrenamiento bajo
-                ChronoUnit.MONTHS.between(event.getWorker().getEntry(), currentDate) < 6
-                        && event.getWorker().getWorkOccasion().equals(TAREAS_PROPIAS_RUTINA)
-                        && event.getWorker().getHoursWorked() < 8
+               // ChronoUnit.MONTHS.between(event.getWorker().getEntry(), currentDate) < 6
+                     //   && TAREAS_PROPIAS_RUTINA.equals(event.getWorker().getWorkOccasion())
+                      //  && event.getWorker().getHoursWorked() < 8
                         && ChronoUnit.MONTHS.between(event.getWorker().getTrainingDate(), currentDate) < 6
                         && !event.getWorker().getAccidentHistory()
-                        && event.getWorker().getVolunteer()
+                     //   && event.getWorker().getVolunteer()
                         //MedioAmbiente adecuado
-                        && !event.getWorkPlace().getInside()
-                        && event.getWorkPlace().getWeather().equals(ALTA_TEMPERATURA)
-                        && event.getWorkPlace().getLighting().equalsIgnoreCase("alto")
-                        && event.getWorkPlace().getNoise().equalsIgnoreCase("bajo")
-                        && event.getWorkPlace().getInspection()
-                        && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2
+                     //   && !event.getWorkPlace().getInside()
+                     //   && event.getWorkPlace().getWeather().equals(ALTA_TEMPERATURA)
+                     //   && event.getWorkPlace().getLighting().equalsIgnoreCase("alto")
+                    //    && event.getWorkPlace().getNoise().equalsIgnoreCase("bajo")
+                      //  && event.getWorkPlace().getInspection()
+                      //  && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2
 
                         //Metodo exigencia bajo
                         && event.getMethod().getEppDesignated()
@@ -37,7 +37,7 @@ public class Case9 {
                         && event.getMethod().getPtsApplied()
                         && event.getMethod().getRisk()
                         && !event.getMethod().getChange()
-                        && event.getMethod().getExpectedBehavior()
+                   //     && event.getMethod().getExpectedBehavior()
                         //Maquina Ingeniería adecuada
                         && !event.getMachine().getWorkEquipmentFails()
                         && event.getMachine().getDefense()
@@ -55,16 +55,21 @@ public class Case9 {
                         && event.getActivity().getLocked()
                         && event.getActivity().getLokedUsed()
 
-        ) {
+
+      */
+
+
+        /*) {
             return "Caso 9 TRABAJO EN ALTURA: habilidades/entrenamiento Baja: La persona tiene: " + ChronoUnit.MONTHS.between(event.getWorker().getEntry(), currentDate) +
                     " de antiguedad " + "-----Tiempo transcurrido de la capacitacion en meses: " + ChronoUnit.MONTHS.between(event.getWorker().getTrainingDate(), currentDate)
                     + "Uso de Bloqueo: " + event.getActivity().getLokedUsed() +
                     " Requeria bloqueo: " + event.getActivity().getLocked() +
                     " Espacio confinado: " + event.getActivity().getConfinedSpace() +
                     " Trabajo en Altura: " + event.getActivity().getHeight() +
-                    " Trabajo inside: " + event.getWorkPlace().getInside() +
+                  //  " Trabajo inside: " + event.getWorkPlace().getInside() +
                     " Clima: " + event.getWorkPlace().getWeather();
         }
         return "case9";
     }
 }
+*/

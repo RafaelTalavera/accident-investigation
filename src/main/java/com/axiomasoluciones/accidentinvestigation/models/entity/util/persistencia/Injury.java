@@ -5,7 +5,6 @@ public enum Injury {
     CONMOCION,
     CONTUSION,
     CORTE,
-    EROISION,
     ESGUINCE,
     FISURA,
     FRACTURA,

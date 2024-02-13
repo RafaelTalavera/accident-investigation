@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.services.logica;
+/*package com.axiomasoluciones.accidentinvestigation.services.logica;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 
@@ -14,16 +14,16 @@ public class Case27 {
             //habilidades entrenamiento bajo
                 ChronoUnit.MONTHS.between(event.getWorker().getEntry(), currentDate) < 6
                         && event.getWorker().getWorkOccasion().equals(TAREAS_PROPIAS_RUTINA)
-                        && event.getWorker().getHoursWorked() < 8
+                     //   && event.getWorker().getHoursWorked() < 8
                         && ChronoUnit.MONTHS.between(event.getWorker().getTrainingDate(), currentDate) < 6
                         && !event.getWorker().getAccidentHistory()
-                        && event.getWorker().getVolunteer()
+                     //   && event.getWorker().getVolunteer()
                         //MedioAmbiente adecuado
-                        && event.getWorkPlace().getInside()
+                      //  && event.getWorkPlace().getInside()
                         && event.getWorkPlace().getLighting().equalsIgnoreCase("alto")
                         && event.getWorkPlace().getNoise().equalsIgnoreCase("bajo")
-                        && event.getWorkPlace().getInspection()
-                        && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2
+                      //  && event.getWorkPlace().getInspection()
+                      // && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2
                         //Metodo exigencia bajo
                         && event.getMethod().getEppDesignated()
                         && !event.getMethod().getEppUseds()
@@ -64,3 +64,5 @@ public class Case27 {
         return "case27";
     }
 }
+
+ */

@@ -1,10 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
 import com.axiomasoluciones.accidentinvestigation.dto.EventRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.BodyPart;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.IncidentType;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Injury;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Severity;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.*;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,42 +24,64 @@ public class Event implements Serializable {
 
     @Id
     private String id;
-
-    @Column(name="fecha")
     private LocalDate dateEvent;
-
-    private String description;
     private Severity severity;
-    private Severity poSeverity;
     private BodyPart bodyPart;
     private Injury injury;
     private IncidentType incidenType;
-    private String imagen;
-    private String aditionalImagen;
 
-    private Worker worker;
-    private WorkPlace workPlace;
-    private Method method;
-    private Activity activity;
-    private Machine machine;
+    private LocalDate entry;
+    private WorkOccasion  workOccasion;
+    private HoursWorked hoursWorked;
+    private LocalDate trainingDate;
+    private Boolean accidentHistory;
+
+    private Boolean authorization;
+    private Boolean authorizationWork;
+    private Boolean pts;
+    private Boolean ptsApplied;
+
+    private Boolean machine;
+    private Energy energy;
+    private Boolean lockedIn;
+    private Boolean lockedRequired;
+    private Boolean lockedUsed;
+    private Boolean defense;
+    private Boolean defenseIntegrity;
+    private Boolean workEquipmentFails;
+    private Boolean correctUseEquimant;
 
     private String userId;
 
     public Event(EventRequestDTO eventRequestDTO){
         this.dateEvent = eventRequestDTO.dateEvent();
-        this.description = eventRequestDTO.description();
         this.severity = eventRequestDTO.severity();
-        this.poSeverity = eventRequestDTO.poSeverity();
+        this.bodyPart = eventRequestDTO.bodyPart();
         this.injury = eventRequestDTO.injury();
         this.incidenType = eventRequestDTO.incidenType();
-        this.imagen = eventRequestDTO.imagen();
-        this.aditionalImagen = eventRequestDTO.aditionalImagen();
-        this.worker = eventRequestDTO.worker();
-        this.method = eventRequestDTO.method();
-        this.workPlace = eventRequestDTO.workPlace();
-        this.machine=  eventRequestDTO.machine();
-        this.activity = eventRequestDTO.activity();
+        this.entry = eventRequestDTO.entry();
+        this.workOccasion = eventRequestDTO.workOccasion();
+        this.hoursWorked = eventRequestDTO.hoursWorked();
+        this.trainingDate = eventRequestDTO.trainingDate();
+        this.accidentHistory = eventRequestDTO.accidentHistory();
+        this.authorization = eventRequestDTO.authorization();
+        this.authorizationWork = eventRequestDTO.authorizationWork();
+        this.pts = eventRequestDTO.pts();
+        this.ptsApplied = eventRequestDTO.ptsApplied();
         this.machine = eventRequestDTO.machine();
+        this.energy = eventRequestDTO.energy();
+        this.lockedIn = eventRequestDTO.lockedIn();
+        this.lockedRequired = eventRequestDTO.lockedRequired();
+        this.lockedUsed = eventRequestDTO.lockedUsed();
+        this.defense = eventRequestDTO.defense();
+        this.defenseIntegrity = eventRequestDTO.defenseIntegrity();
+        this.workEquipmentFails = eventRequestDTO.workEquipmentFails();
+        this.correctUseEquimant = eventRequestDTO.correctUseEquimant();
+        this.userId = eventRequestDTO.userId();
+
+
+
+
     }
 
     @Serial

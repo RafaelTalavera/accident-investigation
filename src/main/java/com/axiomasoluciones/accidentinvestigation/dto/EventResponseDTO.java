@@ -1,10 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.dto;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.*;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.BodyPart;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.IncidentType;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Injury;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Severity;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.*;
 
 import java.time.LocalDate;
 
@@ -13,39 +10,61 @@ import java.time.LocalDate;
 public record EventResponseDTO(
         String id,
         LocalDate dateEvent,
-        String description,
         Severity severity,
-        Severity poSeverity,
         BodyPart bodyPart,
         Injury injury,
         IncidentType incidenType,
-        String imagen,
-        String aditionalImagen,
-        Worker worker,
-        WorkPlace workPlace,
-        Method method,
-        Machine machine,
-        Activity activity,
+        LocalDate entry,
+        WorkOccasion workOccasion,
+        HoursWorked hoursWorked,
+        LocalDate trainingDate,
+        Boolean accidentHistory,
+        Boolean authorization,
+        Boolean authorizationWork,
+        Boolean pts,
+        Boolean ptsApplied,
+
+        Boolean machine,
+        Energy energy,
+        Boolean lockedIn,
+        Boolean lockedRequired,
+        Boolean lockedUsed,
+        Boolean defense,
+        Boolean defenseIntegrity,
+        Boolean workEquipmentFails,
+        Boolean correctUseEquimant,
+
         String userId
 ) {
     public EventResponseDTO(Event event){
         this(
                 event.getId(),
                 event.getDateEvent(),
-                event.getDescription(),
                 event.getSeverity(),
-                event.getPoSeverity(),
                 event.getBodyPart(),
                 event.getInjury(),
                 event.getIncidenType(),
-                event.getImagen(),
-                event.getAditionalImagen(),
-                event.getWorker(),
-                event.getWorkPlace(),
-                event.getMethod(),
+                event.getEntry(),
+                event.getWorkOccasion(),
+                event.getHoursWorked(),
+                event.getTrainingDate(),
+                event.getAccidentHistory(),
+                event.getAuthorization(),
+                event.getAuthorizationWork(),
+                event.getPts(),
+                event.getPtsApplied(),
                 event.getMachine(),
-                event.getActivity(),
+                event.getEnergy(),
+                event.getLockedIn(),
+                event.getLockedRequired(),
+                event.getLockedUsed(),
+                event.getDefense(),
+                event.getDefenseIntegrity(),
+                event.getWorkEquipmentFails(),
+                event.getCorrectUseEquimant(),
+
                 event.getUserId()
+
         );
     }
 }

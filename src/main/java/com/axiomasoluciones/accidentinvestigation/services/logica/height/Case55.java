@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.services.logica.height;
+/*package com.axiomasoluciones.accidentinvestigation.services.logica.height;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 
@@ -16,17 +16,17 @@ public class Case55 {
             //habilidades entrenamiento bajo
                 ChronoUnit.MONTHS.between(event.getWorker().getEntry(), currentDate) < 6
                         && event.getWorker().getWorkOccasion().equals(TAREAS_PROPIAS_RUTINA)
-                        && event.getWorker().getHoursWorked() < 8
+                   //     && event.getWorker().getHoursWorked() < 8
                         && ChronoUnit.MONTHS.between(event.getWorker().getTrainingDate(), currentDate) < 6
                         && !event.getWorker().getAccidentHistory()
-                        && event.getWorker().getVolunteer()
+                    //    && event.getWorker().getVolunteer()
                         //MedioAmbiente adecuado
-                        && !event.getWorkPlace().getInside()
+                   //     && !event.getWorkPlace().getInside()
                         && event.getWorkPlace().getWeather().equals(TORMENTA)
                         && event.getWorkPlace().getLighting().equalsIgnoreCase("alto")
                         && event.getWorkPlace().getNoise().equalsIgnoreCase("bajo")
-                        && event.getWorkPlace().getInspection()
-                        && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2
+                   //     && event.getWorkPlace().getInspection()
+                     //   && ChronoUnit.MONTHS.between(event.getWorkPlace().getInspectionDate(), currentDate) < 2
 
                         //Metodo exigencia bajo
                         && event.getMethod().getEppDesignated()
@@ -62,10 +62,13 @@ public class Case55 {
                     " Requeria bloqueo: " + event.getActivity().getLocked() +
                     " Espacio confinado: " + event.getActivity().getConfinedSpace() +
                     " Trabajo en Altura: " + event.getActivity().getHeight() +
-                    " Trabajo inside: " + event.getWorkPlace().getInside() +
+                //    " Trabajo inside: " + event.getWorkPlace().getInside() +
                     " Clima: " + event.getWorkPlace().getWeather() +
                     " El trabajador tenia autorizacion: " + event.getMethod().getAuthorizationWork();
         }
         return "case55";
     }
 }
+
+
+ */

@@ -19,8 +19,14 @@ public interface IEventService {
 
     void delete(Event event);
 
-    String getAntiguedadMessageById(String id);
+    String extractUserEmailFromToken(String token);
+
+
+
+  /*  String getAntiguedadMessageById(String id);
 
     String getCase1ById(String id);
+
+   */
 
 }
