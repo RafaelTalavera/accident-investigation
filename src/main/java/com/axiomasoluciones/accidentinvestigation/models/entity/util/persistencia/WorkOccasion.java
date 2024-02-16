@@ -3,6 +3,7 @@ package com.axiomasoluciones.accidentinvestigation.models.entity.util.persistenc
 public enum WorkOccasion {
 
     TAREAS_AJENAS,
+    DESCONOCIDA,
     TAREAS_RUTINARIAS,
     TAREAS_FUERA_RUTINA;
 }

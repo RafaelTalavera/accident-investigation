@@ -28,7 +28,6 @@ public class Event implements Serializable {
     private Severity severity;
     private BodyPart bodyPart;
     private Injury injury;
-    private IncidentType incidenType;
 
     private Boolean entry;
     private WorkOccasion workOccasion;
@@ -45,7 +44,7 @@ public class Event implements Serializable {
     private Boolean lockedIn;
     private Boolean lockedRequired;
     private Boolean lockedUsed;
-    private Boolean workEquipmentFails;
+    private Boolean fails;
     private String userId;
 
     public Event(EventRequestDTO eventRequestDTO){
@@ -53,7 +52,6 @@ public class Event implements Serializable {
         this.severity = eventRequestDTO.severity();
         this.bodyPart = eventRequestDTO.bodyPart();
         this.injury = eventRequestDTO.injury();
-        this.incidenType = eventRequestDTO.incidenType();
         this.entry = eventRequestDTO.entry();
         this.workOccasion = eventRequestDTO.workOccasion();
         this.hoursWorked = eventRequestDTO.hoursWorked();
@@ -67,7 +65,7 @@ public class Event implements Serializable {
         this.lockedIn = eventRequestDTO.lockedIn();
         this.lockedRequired = eventRequestDTO.lockedRequired();
         this.lockedUsed = eventRequestDTO.lockedUsed();
-        this.workEquipmentFails = eventRequestDTO.workEquipmentFails();
+        this.fails = eventRequestDTO.fails();
         this.userId = eventRequestDTO.userId();
 
 

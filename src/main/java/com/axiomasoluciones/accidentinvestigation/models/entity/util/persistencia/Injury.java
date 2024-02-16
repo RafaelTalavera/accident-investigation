@@ -2,6 +2,7 @@ package com.axiomasoluciones.accidentinvestigation.models.entity.util.persistenc
 
 public enum Injury {
     AMPUTACION,
+    DESCONOCIDA,
     CONMOCION,
     CONTUSION,
     CORTE,

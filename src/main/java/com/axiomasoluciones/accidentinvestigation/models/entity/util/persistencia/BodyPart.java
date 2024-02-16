@@ -5,6 +5,7 @@ public enum BodyPart {
     CUELLO,
     CARA,
     BRAZO,
+    DESCONOCIDA,
     MANO,
     PIERNA,
     PIE,

@@ -22,7 +22,7 @@ public class EventServiceImplements implements IEventService {
     private IEventDao eventDao;
 
     @Autowired
-    private CausasService causasService;
+    private CausasHandler causasHandler;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -73,7 +73,7 @@ public class EventServiceImplements implements IEventService {
 
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
-            return causasService.case1(event);
+            return causasHandler.evaluarCausas(event);
         } else {
             throw new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id);
         }

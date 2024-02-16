@@ -8,7 +8,6 @@ public record EventRequestDTO(
         Severity severity,
         BodyPart bodyPart,
         Injury injury,
-        IncidentType incidenType,
         Boolean entry,
         WorkOccasion workOccasion,
         HoursWorked hoursWorked,
@@ -22,7 +21,7 @@ public record EventRequestDTO(
         Boolean lockedIn,
         Boolean lockedRequired,
         Boolean lockedUsed,
-        Boolean workEquipmentFails,
+        Boolean fails,
         String userId
 ) {
 }
