@@ -30,10 +30,9 @@ public class Event implements Serializable {
     private Injury injury;
     private IncidentType incidenType;
 
-    private LocalDate entry;
-    private WorkOccasion  workOccasion;
+    private Boolean entry;
+    private WorkOccasion workOccasion;
     private HoursWorked hoursWorked;
-    private LocalDate trainingDate;
     private Boolean accidentHistory;
 
     private Boolean authorization;
@@ -46,11 +45,7 @@ public class Event implements Serializable {
     private Boolean lockedIn;
     private Boolean lockedRequired;
     private Boolean lockedUsed;
-    private Boolean defense;
-    private Boolean defenseIntegrity;
     private Boolean workEquipmentFails;
-    private Boolean correctUseEquimant;
-
     private String userId;
 
     public Event(EventRequestDTO eventRequestDTO){
@@ -62,7 +57,6 @@ public class Event implements Serializable {
         this.entry = eventRequestDTO.entry();
         this.workOccasion = eventRequestDTO.workOccasion();
         this.hoursWorked = eventRequestDTO.hoursWorked();
-        this.trainingDate = eventRequestDTO.trainingDate();
         this.accidentHistory = eventRequestDTO.accidentHistory();
         this.authorization = eventRequestDTO.authorization();
         this.authorizationWork = eventRequestDTO.authorizationWork();
@@ -73,10 +67,7 @@ public class Event implements Serializable {
         this.lockedIn = eventRequestDTO.lockedIn();
         this.lockedRequired = eventRequestDTO.lockedRequired();
         this.lockedUsed = eventRequestDTO.lockedUsed();
-        this.defense = eventRequestDTO.defense();
-        this.defenseIntegrity = eventRequestDTO.defenseIntegrity();
         this.workEquipmentFails = eventRequestDTO.workEquipmentFails();
-        this.correctUseEquimant = eventRequestDTO.correctUseEquimant();
         this.userId = eventRequestDTO.userId();
 
 

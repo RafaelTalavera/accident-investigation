@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -59,25 +60,20 @@ import java.util.stream.Collectors;
         }
     }
 
-   /* @GetMapping("/{id}/antiguedad-message")
-    public ResponseEntity<String> getAntiguedadMessageById(@PathVariable String id) {
+    @GetMapping("/{id}/causa")
+    public ResponseEntity<String> getCausaById(@PathVariable String id) {
         try {
-            Optional<Event> optionalEvent = eventService.findById(id);
-
-            if (optionalEvent.isPresent()) {
-                Event event = optionalEvent.get();
-                String antiguedadMessage = eventServiceImplements.getAntiguedadMessageForEvent(event);
-                return ResponseEntity.ok(antiguedadMessage);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            String causa = eventService.getCausa(id);
+            return new ResponseEntity<>(causa, HttpStatus.OK);
+        } catch (RegistroNoEncontradoException e) {
+            return new ResponseEntity<>("Registro no encontrado: " + e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            // Manejar cualquier excepción y devolver un ResponseEntity con un mensaje de error
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener el mensaje de antigüedad.");
+            return new ResponseEntity<>("Error interno al obtener la causa del evento: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-        @GetMapping("/{id}")
+
+    @GetMapping("/{id}")
         public ResponseEntity<EventResponseDTO> getById(@PathVariable String id){
             Optional<Event> optionalEvent = eventService.findById(id);
 
@@ -96,7 +92,7 @@ import java.util.stream.Collectors;
             return new ResponseEntity<>("Registro eliminado correctamente", HttpStatus.OK);
         }
 
-    */
+
 
     @PreAuthorize("permitAll")
         @PostMapping
@@ -117,26 +113,6 @@ import java.util.stream.Collectors;
     }
 
 
-
-  /*  @GetMapping("/{id}/case1-message")
-    public ResponseEntity<String> getCase1MessageById(@PathVariable String id) {
-        try {
-            Optional<Event> optionalEvent = eventService.findById(id);
-
-            if (optionalEvent.isPresent()) {
-                Event event = optionalEvent.get();
-                String case1Message = eventServiceImplements.getCase1ById(id);
-                return ResponseEntity.ok(case1Message);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            // Handle any exception and return a ResponseEntity with an error message
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener el mensaje del caso 1.");
-        }
-    }
-
-   */
 
 
 

@@ -23,12 +23,8 @@ public interface IEventService {
 
     public List<Event> findByUserId(String userId);
 
-
-
-  /*  String getAntiguedadMessageById(String id);
-
-    String getCase1ById(String id);
-
-   */
+    public String getCausa(String id);
 
 }
+
+

@@ -14,25 +14,20 @@ public record EventResponseDTO(
         BodyPart bodyPart,
         Injury injury,
         IncidentType incidenType,
-        LocalDate entry,
+        Boolean entry,
         WorkOccasion workOccasion,
         HoursWorked hoursWorked,
-        LocalDate trainingDate,
         Boolean accidentHistory,
         Boolean authorization,
         Boolean authorizationWork,
         Boolean pts,
         Boolean ptsApplied,
-
         Boolean machine,
         Energy energy,
         Boolean lockedIn,
         Boolean lockedRequired,
         Boolean lockedUsed,
-        Boolean defense,
-        Boolean defenseIntegrity,
         Boolean workEquipmentFails,
-        Boolean correctUseEquimant,
 
         String userId
 ) {
@@ -47,7 +42,6 @@ public record EventResponseDTO(
                 event.getEntry(),
                 event.getWorkOccasion(),
                 event.getHoursWorked(),
-                event.getTrainingDate(),
                 event.getAccidentHistory(),
                 event.getAuthorization(),
                 event.getAuthorizationWork(),
@@ -58,12 +52,9 @@ public record EventResponseDTO(
                 event.getLockedIn(),
                 event.getLockedRequired(),
                 event.getLockedUsed(),
-                event.getDefense(),
-                event.getDefenseIntegrity(),
                 event.getWorkEquipmentFails(),
-                event.getCorrectUseEquimant(),
-
                 event.getUserId()
+
 
         );
     }
