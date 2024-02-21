@@ -1,6 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.dto;
 
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.*;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.*;
 import java.time.LocalDate;
 
 public record EventRequestDTO(
@@ -18,10 +18,10 @@ public record EventRequestDTO(
         Boolean ptsApplied,
         Boolean machine,
         Energy energy,
-        Boolean lockedIn,
         Boolean lockedRequired,
         Boolean lockedUsed,
         Boolean fails,
-        String userId
+        String userId,
+        String comment
 ) {
 }

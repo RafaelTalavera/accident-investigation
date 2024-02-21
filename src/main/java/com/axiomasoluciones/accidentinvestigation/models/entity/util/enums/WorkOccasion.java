@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia;
+package com.axiomasoluciones.accidentinvestigation.models.entity.util.enums;
 
 public enum WorkOccasion {
 

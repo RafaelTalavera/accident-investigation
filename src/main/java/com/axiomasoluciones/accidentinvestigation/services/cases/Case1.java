@@ -1,40 +1,53 @@
 package com.axiomasoluciones.accidentinvestigation.services.cases;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.HoursWorked;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.WorkOccasion;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.HoursWorked;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.WorkOccasion;
 import org.json.JSONObject;
-import org.springframework.stereotype.Service;
 
-
-@Service
 public class Case1 {
 
-  public String case1(Event event){
+    public String case1(Event event) {
 
-     if (
-             event.getEntry()                 // true: tienne más de 6 meses
-             && event.getWorkOccasion().equals(WorkOccasion.TAREAS_RUTINARIAS)
-             && event.getHoursWorked().equals(HoursWorked.MENOS_8)
-             && !event.getAccidentHistory()   // false: no hubo accidentes previos
-             && event.getAuthorization()      // true : el trabajo requeria autorización
-             && event.getAuthorizationWork()  // true: el trabajador tenia autorización
-             && event.getPts()                // true: Existia un Pts
-             && event.getPtsApplied()         // true: El trabajador aplico el pts
-             && !event.getMachine()           // false: No se uso maquina
+        if (
 
-     ){
-         // Crear un objeto JSON con la hipótesis
-         JSONObject jsonHipotesis = new JSONObject();
-         jsonHipotesis.put("Personales", "Factores personales: No se identificaron posibles causas según la información ingresdada");
-         jsonHipotesis.put("Maquina", " Maquina: Según la información ingresada no se utilizo una maquina en al momento de ocurrido el evento ");
-         jsonHipotesis.put("Metodo", " Método: Según la información ingresada, se puede inferir que el método de trabajo seguro presenta debilidades. Esto se fundamenta en que, a pesar de cumplirse con el estándar de trabajo seguro, de igual manera, el evento ocurrió. ");
+            //metodo
+                event.getEntry()                         // true: Antiguedad
+                        && event.getAuthorization()      // true: requeria autorización
+                        && event.getPts()                // true: Existia un Pts
+                        && event.getWorkOccasion().equals(WorkOccasion.TAREAS_RUTINARIAS)
 
-         // Devolver la representación en cadena del objeto JSON
-         return jsonHipotesis.toString();
-     }
+                        //Mano de obra
+                        && event.getHoursWorked().equals(HoursWorked.MENOS_8)
+                        && event.getAccidentHistory()    // true: hubo accidentes previos
+                        && event.getAuthorizationWork()  // true: el trabajador tenia autorización
+                        && event.getPtsApplied()         // true: El trabajador aplico el pts
+                        && event.getLockedUsed()         // true: Se realizo el bloque
 
-      return "caso1";
-  }
+                        //Maquina
+                        && event.getMachine()            // true: Uso maquina
+                        && event.getLockedRequired()     // true: Era requerido el bloqueo
+                        && event.getFails()              // true:  Hay fallas
 
+
+        ) {
+            // Crear un objeto JSON con la hipótesis
+            JSONObject jsonHipotesis = new JSONObject();
+            jsonHipotesis.put("Metodo", "Aunque no se observaron causas directamente relacionadas con el método, se puede inferir que este presenta debilidades. Esta conclusión se basa en la premisa de que, si existe un procedimiento de trabajo seguro y el trabajador lo cumple, el evento no debería haber ocurrido. " +
+                    " Es importante analizar el método de trabajo teniendo en cuenta: La lesión " + event.getInjury() + " y la enegía empleada en la tarea: " + event.getEnergy());
+            jsonHipotesis.put("Personales", "No se evidencian factores que puedan estar relacionados con incumplimientos de procedimientos, fatiga o falta de experiencia en el puesto. No obstante, la persona cuenta con un historial de accidentes previos, lo que sugiere que podría ser alguien propenso a conductas riesgosas.");
+            jsonHipotesis.put("Maquina", "No se identificaron causas probables" +
+                    ". Según la información ingresada, la energía utilizada es: " + event.getEnergy() + " y es posible bloquearla." +
+                    " Se recomienda revisar si la naturaleza de la lesión: " + event.getInjury() + " es coherente con la energía bloqueada." +
+                    " Además, identificar que no existan energías residuales que no hayan sido bloqueadas.");
+
+            // Devolver la representación en cadena del objeto JSON
+            return jsonHipotesis.toString();
+        }
+        JSONObject jsonHipotesis = new JSONObject();
+        jsonHipotesis.put("Caso 1 ", "Salio del if");
+
+
+        return "caso1";
+    }
 }

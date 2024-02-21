@@ -109,10 +109,10 @@ import java.util.stream.Collectors;
             return new ResponseEntity<>(eventResponseDTO, HttpStatus.CREATED);
         }
 
-
+    @PutMapping("/{id}/comment")
+    public Event editEvent(@PathVariable String id, @RequestBody Event editedEvent) {
+        return eventService.editEvent(id, editedEvent);
     }
 
-
-
-
+    }
 

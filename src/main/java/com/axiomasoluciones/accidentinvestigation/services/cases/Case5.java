@@ -1,9 +1,9 @@
 package com.axiomasoluciones.accidentinvestigation.services.cases;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.Energy;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.HoursWorked;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.WorkOccasion;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.Energy;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.HoursWorked;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.WorkOccasion;
 import org.json.JSONObject;
 
 public class Case5 {
@@ -20,9 +20,9 @@ public class Case5 {
                         && event.getPts()                 // true: Existia un Pts
                         && event.getPtsApplied()          // true: El trabajador aplico el pts
                         && event.getMachine()             // true: Uso maquina
-                        && !event.getLockedIn()           // false: No es posible bloquear
-                        && !event.getLockedRequired()     // false:No era requerido el bloqueo
-                        && !event.getLockedUsed()         // false: No se realizo el bloque
+
+                        && event.getLockedRequired()      // true: requerido el bloqueo
+                        && event.getLockedUsed()          // true: se realizo el bloque
                         && event.getFails()               // true: el equipo presenta falla
                         && event.getEnergy().equals(Energy.DESCONOCIDA)
 
@@ -34,7 +34,7 @@ public class Case5 {
             jsonHipotesis.put("Personales", "Factores personales: No se identificaron posibles causas según la información ingresdada");
             jsonHipotesis.put("Maquina", "Máquina: Según el relevamiento, la energía es: " + event.getEnergy() +
                     " , lo provoca que no sea posible bloquerla correctamente. " +
-                    " Revisa en profundidad el equipo utilizado con el fin de poder generar los mecanismos para bloquear las energías que utiliza." +
+                    " Adicionalmente, usted seleccionó que era posible hacer el bloqueo de energía, que era requerido para la tarea que se realizaba y lo llevó a cabo. Esto representa una grave inconsistencia, teniendo en cuenta que la energía es desconocida." +
                     "También es importante destacar que el equipo presentaba fallas previas al evento.");
             jsonHipotesis.put("Metodo", "Método: Según la información ingresada, se puede inferir que el método de trabajo seguro presenta debilidades. Esto se fundamenta en que, a pesar de cumplirse con el estándar de trabajo seguro, de igual manera, el evento ocurrió. " );
 

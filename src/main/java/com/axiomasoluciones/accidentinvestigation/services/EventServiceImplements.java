@@ -93,9 +93,7 @@ public class EventServiceImplements implements IEventService {
         Event existEvent = eventDao.findById(id)
                 .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
 
-        existEvent.setDateEvent(editedEvent.getDateEvent());
-        existEvent.setSeverity(editedEvent.getSeverity());
-
+        existEvent.setComment(editedEvent.getComment());
 
         return eventDao.save(existEvent);
     }

@@ -1,7 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
 import com.axiomasoluciones.accidentinvestigation.dto.EventRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.persistencia.*;
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.*;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,11 +41,11 @@ public class Event implements Serializable {
 
     private Boolean machine;
     private Energy energy;
-    private Boolean lockedIn;
     private Boolean lockedRequired;
     private Boolean lockedUsed;
     private Boolean fails;
     private String userId;
+    private String comment = "sin comentario";
 
     public Event(EventRequestDTO eventRequestDTO){
         this.dateEvent = eventRequestDTO.dateEvent();
@@ -62,11 +62,11 @@ public class Event implements Serializable {
         this.ptsApplied = eventRequestDTO.ptsApplied();
         this.machine = eventRequestDTO.machine();
         this.energy = eventRequestDTO.energy();
-        this.lockedIn = eventRequestDTO.lockedIn();
         this.lockedRequired = eventRequestDTO.lockedRequired();
         this.lockedUsed = eventRequestDTO.lockedUsed();
         this.fails = eventRequestDTO.fails();
         this.userId = eventRequestDTO.userId();
+        this.comment = eventRequestDTO.comment();
 
 
 
