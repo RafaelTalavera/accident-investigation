@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 public record EventResponseDTO(
         String id,
+        String title,
         LocalDate dateEvent,
         Severity severity,
         BodyPart bodyPart,
@@ -32,6 +33,7 @@ public record EventResponseDTO(
 ) {
     public EventResponseDTO(Event event){
         this(
+                event.getTitle(),
                 event.getId(),
                 event.getDateEvent(),
                 event.getSeverity(),

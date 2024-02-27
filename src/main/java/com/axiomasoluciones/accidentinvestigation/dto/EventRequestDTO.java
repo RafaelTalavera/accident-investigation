@@ -4,6 +4,7 @@ import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.*;
 import java.time.LocalDate;
 
 public record EventRequestDTO(
+        String title,
         LocalDate dateEvent,
         Severity severity,
         BodyPart bodyPart,

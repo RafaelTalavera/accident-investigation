@@ -24,6 +24,7 @@ public class Event implements Serializable {
 
     @Id
     private String id;
+    private String title;
     private LocalDate dateEvent;
     private Severity severity;
     private BodyPart bodyPart;
@@ -48,6 +49,7 @@ public class Event implements Serializable {
     private String comment = "sin comentario";
 
     public Event(EventRequestDTO eventRequestDTO){
+        this.title = eventRequestDTO.title();
         this.dateEvent = eventRequestDTO.dateEvent();
         this.severity = eventRequestDTO.severity();
         this.bodyPart = eventRequestDTO.bodyPart();

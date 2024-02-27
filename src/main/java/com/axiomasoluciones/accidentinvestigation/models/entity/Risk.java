@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -20,37 +21,46 @@ public class Risk implements Serializable  {
 
     @Id
     private String id;
-    private String proceso;
-    private String puestoTrabajo;
-    private Integer nTrabajadores;
+    private String puesto;
+    private String area;
+    private String sector;
+    private String tarea;
     private String fuente;
-    private String actividad;
-    private String description;
     private String incidentesPotenciales;
-    private String medidaControl;
+    private String consecuencia;
+    private String tActividad;
     private String probabilidad;
     private String severidad;
     private String evaluacion;
-    private String nivelRiesgo;
+    private String clasificaRiesgo;
+    private String ClasificaMC;
+    private String medidaControl;
     private String newControl;
+    private LocalDate date;
     private String userId;
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+
+
 public Risk(RiskRequestDTO riskRequestDTO){
-    this.proceso = riskRequestDTO.proceso();
-    this.puestoTrabajo = riskRequestDTO.puestoTrabajo();
-    this.nTrabajadores = riskRequestDTO.nTrabajadores();
+    this.puesto = riskRequestDTO.puesto();
+    this.area = riskRequestDTO.area();
+    this.sector = riskRequestDTO.sector();
+    this.tarea = riskRequestDTO.tarea();
     this.fuente = riskRequestDTO.fuente();
-    this.actividad = riskRequestDTO.actividad();
-    this.description = riskRequestDTO.description();
     this.incidentesPotenciales = riskRequestDTO.incidentesPotenciales();
-    this.medidaControl = riskRequestDTO.medidaControl();
+    this.consecuencia = riskRequestDTO.consecuencia();
+    this.tActividad = riskRequestDTO.tActividad();
     this.probabilidad = riskRequestDTO.probabilidad();
     this.severidad = riskRequestDTO.severidad();
     this.evaluacion = riskRequestDTO.evaluacion();
-    this.nivelRiesgo = riskRequestDTO.nivelRiesgo();
+    this.clasificaRiesgo = riskRequestDTO.clasificaRiesgo();
+    this.ClasificaMC = riskRequestDTO.ClasificaMC();
+    this.medidaControl = riskRequestDTO.medidaControl();
     this.newControl = riskRequestDTO.newControl();
+    this.date = riskRequestDTO.date();
     this.userId = riskRequestDTO.userId();
 }
 
