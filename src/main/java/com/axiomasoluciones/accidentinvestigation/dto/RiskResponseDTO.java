@@ -6,19 +6,17 @@ import java.time.LocalDate;
 
 public record RiskResponseDTO(
         String id,
-        String puesto,
-        String area,
-        String sector,
+        String puesto, //
+        String area, //
         String tarea,
-        String fuente,
-        String incidentesPotenciales,
-        String consecuencia,
-        String tActividad,
-        String probabilidad,
-        String severidad,
+        String fuente, //
+        String incidentesPotenciales, //
+        String consecuencia, //
+        String tipo, //
+        int probabilidad,
+        int gravedad,
         String evaluacion,
-        String clasificaRiesgo,
-        String ClasificaMC,
+        String clasificaMC,
         String medidaControl,
         String newControl,
         LocalDate date,
@@ -29,16 +27,14 @@ public record RiskResponseDTO(
                 risk.getId(),
                 risk.getPuesto(),
                 risk.getArea(),
-                risk.getSector(),
                 risk.getTarea(),
                 risk.getFuente(),
                 risk.getIncidentesPotenciales(),
                 risk.getConsecuencia(),
-                risk.getTActividad(),
+                risk.getTipo(),
                 risk.getProbabilidad(),
-                risk.getSeveridad(),
+                risk.getGravedad(),
                 risk.getEvaluacion(),
-                risk.getClasificaRiesgo(),
                 risk.getClasificaMC(),
                 risk.getMedidaControl(),
                 risk.getNewControl(),

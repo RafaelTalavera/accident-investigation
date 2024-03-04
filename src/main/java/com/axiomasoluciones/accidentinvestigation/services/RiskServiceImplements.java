@@ -36,8 +36,26 @@ public class RiskServiceImplements implements IRiskService {
 
     @Override
     public Risk save(Risk risk) {
+        int gravedad = risk.getGravedad();
+        int probabilidad = risk.getProbabilidad();
+
+        int resultado = gravedad * probabilidad;
+
+        // Verificar condiciones para clasificar según las categorías dadas
+        if (resultado >= 1 && resultado <= 4 && resultado >= 1 && resultado <= 4) {
+            risk.setEvaluacion("Aceptable");
+        } else if (resultado >= 5 && resultado <= 9 && resultado >= 5 && resultado <= 9) {
+            risk.setEvaluacion("Adecuado");
+        } else if (resultado >= 10 && resultado <= 16 && resultado >= 10 && resultado <= 16) {
+            risk.setEvaluacion("Tolerable");
+        } else if (resultado >= 17 && resultado <= 25 && resultado >= 17 && resultado <= 25) {
+            risk.setEvaluacion("Inaceptable");
+        }
+
+        // Guardar el objeto Risk en la base de datos
         return riskDao.save(risk);
     }
+
 
     @Override
     public void deleteById(String id) {

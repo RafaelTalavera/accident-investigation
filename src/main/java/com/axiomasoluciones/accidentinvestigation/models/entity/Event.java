@@ -49,6 +49,7 @@ public class Event implements Serializable {
     private String comment = "sin comentario";
 
     public Event(EventRequestDTO eventRequestDTO){
+
         this.title = eventRequestDTO.title();
         this.dateEvent = eventRequestDTO.dateEvent();
         this.severity = eventRequestDTO.severity();
@@ -69,9 +70,6 @@ public class Event implements Serializable {
         this.fails = eventRequestDTO.fails();
         this.userId = eventRequestDTO.userId();
         this.comment = eventRequestDTO.comment();
-
-
-
 
     }
 

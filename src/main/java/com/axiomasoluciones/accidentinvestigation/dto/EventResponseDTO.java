@@ -33,8 +33,8 @@ public record EventResponseDTO(
 ) {
     public EventResponseDTO(Event event){
         this(
-                event.getTitle(),
                 event.getId(),
+                event.getTitle(),
                 event.getDateEvent(),
                 event.getSeverity(),
                 event.getBodyPart(),
