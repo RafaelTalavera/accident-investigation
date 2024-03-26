@@ -1,13 +1,11 @@
 package com.axiomasoluciones.accidentinvestigation.services;
 
-import com.axiomasoluciones.accidentinvestigation.dto.UserRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.UserResponseDTO;
-import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
+
+
 import com.axiomasoluciones.accidentinvestigation.models.dao.IUserDao;
-import com.axiomasoluciones.accidentinvestigation.models.entity.Event;
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +18,7 @@ public class UserServiceImplements implements IUserService{
     @Autowired
     private IUserDao userDao;
 
-    @Autowired
+
 
     @Override
     @Transactional(readOnly = true)

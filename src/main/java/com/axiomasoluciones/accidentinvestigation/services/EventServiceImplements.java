@@ -63,6 +63,7 @@ public class EventServiceImplements implements IEventService {
     }
 
     @Override
+    @Transactional
     public List<Event> findByUserId(String userId) {
         return eventDao.findEventByUserId(userId);
     }

@@ -26,13 +26,13 @@ public class Event implements Serializable {
     private String id;
     private String title;
     private LocalDate dateEvent;
-    private Severity severity;
-    private BodyPart bodyPart;
-    private Injury injury;
+    private String severity;
+    private String bodyPart;
+    private String injury;
 
     private Boolean entry;
-    private WorkOccasion workOccasion;
-    private HoursWorked hoursWorked;
+    private Boolean workOccasion;
+    private Boolean hoursWorked;
     private Boolean accidentHistory;
 
     private Boolean authorization;
@@ -41,7 +41,7 @@ public class Event implements Serializable {
     private Boolean ptsApplied;
 
     private Boolean machine;
-    private Energy energy;
+    private String energy;
     private Boolean lockedRequired;
     private Boolean lockedUsed;
     private Boolean fails;

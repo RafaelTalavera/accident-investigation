@@ -3,6 +3,7 @@ package com.axiomasoluciones.accidentinvestigation.controllers;
 import com.axiomasoluciones.accidentinvestigation.dto.RiskRequestDTO;
 import com.axiomasoluciones.accidentinvestigation.dto.RiskResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
+import com.axiomasoluciones.accidentinvestigation.models.dao.IRiskDao;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Risk;
 import com.axiomasoluciones.accidentinvestigation.services.IRiskService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,15 +14,19 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/risk")
-public class RiskController {
+public class RiskRestController {
 
     @Autowired
     private IRiskService riskService;
+
+    @Autowired
+    private IRiskDao iRiskDao;
 
     @GetMapping
     public ResponseEntity<List<RiskResponseDTO>> getAll() {
@@ -66,4 +71,22 @@ public class RiskController {
         RiskResponseDTO riskResponseDTO = new RiskResponseDTO(newRisk);
         return new ResponseEntity<>(riskResponseDTO, HttpStatus.CREATED);
     }
+
+    @GetMapping("/countClasificaMC")
+    public ResponseEntity<Map<String, Integer>> countClasificaMCByAreaAndPuesto(
+            @RequestParam String area,
+            @RequestParam String puesto) {
+        Map<String, Integer> countMap = riskService.countClasificaMCByAreaAndPuesto(area, puesto);
+        return new ResponseEntity<>(countMap, HttpStatus.OK);
+    }
+    @GetMapping("/countEvaluacion")
+    public ResponseEntity<Map<String, Map<String, Integer>>> countEvaluacionMCByAreaAndPuesto(
+            @RequestParam String area,
+            @RequestParam String puesto) {
+        Map<String, Map<String, Integer>> countMap = riskService.countEvaluacionByAreaAndPuesto(area, puesto);
+        return new ResponseEntity<>(countMap, HttpStatus.OK);
+    }
+
+
+
 }

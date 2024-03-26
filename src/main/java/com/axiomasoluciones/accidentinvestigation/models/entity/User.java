@@ -30,6 +30,8 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
+    private String phone;
+    private String fullname;
 
     //Esta anotación es para que en vez de guardar el valor ordinal traiga el nombre.
     @Enumerated(EnumType.STRING)
@@ -39,6 +41,8 @@ public class User implements UserDetails {
         this.username = userRequestDTO.username();
         this.email = userRequestDTO.email();
         this.password = userRequestDTO.password();
+        this.phone = userRequestDTO.phone();
+        this.fullname = userRequestDTO.fullname();
         this.role = userRequestDTO.role();
     }
 

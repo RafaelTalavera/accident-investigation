@@ -6,6 +6,8 @@ public record UserRequestDTO(
         String username,
         String password,
         String email,
+        String phone,
+        String fullname,
         Role role
 
 ) {
@@ -15,6 +17,8 @@ public record UserRequestDTO(
                 userRequestDTO.username(),
                 userRequestDTO.email(),
                 userRequestDTO.password(),
+                userRequestDTO.phone(),
+                userRequestDTO.fullname(),
                 Role.ADMINISTRATOR
         );
     }

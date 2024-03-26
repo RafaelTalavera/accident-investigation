@@ -6,13 +6,13 @@ import java.time.LocalDate;
 
 public record RiskResponseDTO(
         String id,
-        String puesto, //
-        String area, //
+        String puesto,
+        String area,
         String tarea,
-        String fuente, //
-        String incidentesPotenciales, //
-        String consecuencia, //
-        String tipo, //
+        String fuente,
+        String incidentesPotenciales,
+        String consecuencia,
+        String tipo,
         int probabilidad,
         int gravedad,
         String evaluacion,

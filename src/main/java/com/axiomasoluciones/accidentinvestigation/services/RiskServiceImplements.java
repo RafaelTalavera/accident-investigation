@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,6 +37,7 @@ public class RiskServiceImplements implements IRiskService {
     }
 
     @Override
+    @Transactional
     public Risk save(Risk risk) {
         int gravedad = risk.getGravedad();
         int probabilidad = risk.getProbabilidad();
@@ -58,6 +61,7 @@ public class RiskServiceImplements implements IRiskService {
 
 
     @Override
+    @Transactional
     public void deleteById(String id) {
 
         Risk existingRisk = riskDao.findById(id)
@@ -67,6 +71,7 @@ public class RiskServiceImplements implements IRiskService {
     }
 
     @Override
+    @Transactional
     public Risk editRisk(String id, Risk editedRisk) {
         return null;
     }
@@ -88,4 +93,51 @@ public class RiskServiceImplements implements IRiskService {
     public List<Risk> findByUserId(String userId) {
         return riskDao.findByUserId(userId);
     }
+
+    @Override
+    public Map<String, Integer> countClasificaMCByAreaAndPuesto(String area, String puesto) {
+        Map<String, Integer> countMap = new HashMap<>();
+        List<Risk> risks = riskDao.findRiskByAreaAndPuesto(area, puesto);
+
+        for (Risk risk : risks) {
+            String clasificaMC = risk.getClasificaMC();
+            countMap.put(clasificaMC, countMap.getOrDefault(clasificaMC, 0) + 1);
+        }
+
+        return countMap;
+    }
+
+    @Override
+    public Map<String, Map<String, Integer>> countEvaluacionByAreaAndPuesto(String area, String puesto) {
+        Map<String, Map<String, Integer>> countMap = new HashMap<>();
+        List<Risk> risks = riskDao.findRiskByAreaAndPuesto(area, puesto);
+
+        for (Risk risk : risks) {
+            String areaRisk = risk.getArea(); // Obtener el área de la instancia de Risk
+            String puestoRisk = risk.getPuesto(); // Obtener el puesto de la instancia de Risk
+            String evaluacion = risk.getEvaluacion();
+            String key = areaRisk + " - " + puestoRisk; // Crear una clave única para cada área y puesto
+
+            // Verificar si el área ya está en el map exterior
+            if (!countMap.containsKey(key)) {
+                countMap.put(key, new HashMap<>());
+            }
+
+            Map<String, Integer> innerMap = countMap.get(key);
+
+            // Contar el número de veces que aparece cada evaluación en el área y puesto específicos
+            innerMap.put(evaluacion, innerMap.getOrDefault(evaluacion, 0) + 1);
+
+            // Incrementar el contador total
+            innerMap.put("count", innerMap.getOrDefault("count", 0) + 1);
+        }
+
+        return countMap;
+    }
+
+
+
+
 }
+
+

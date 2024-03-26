@@ -15,10 +15,10 @@ public class Case1 {
                 event.getEntry()                         // true: Antiguedad
                         && event.getAuthorization()      // true: requeria autorización
                         && event.getPts()                // true: Existia un Pts
-                        && event.getWorkOccasion().equals(WorkOccasion.TAREAS_RUTINARIAS)
+                        && event.getWorkOccasion()
 
                         //Mano de obra
-                        && event.getHoursWorked().equals(HoursWorked.MENOS_8)
+                        && event.getHoursWorked()
                         && event.getAccidentHistory()    // true: hubo accidentes previos
                         && event.getAuthorizationWork()  // true: el trabajador tenia autorización
                         && event.getPtsApplied()         // true: El trabajador aplico el pts
