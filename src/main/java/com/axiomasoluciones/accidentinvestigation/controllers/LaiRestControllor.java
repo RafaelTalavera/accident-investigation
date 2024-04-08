@@ -12,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -54,7 +54,7 @@ public class LaiRestControllor {
 
     @PostMapping
     public ResponseEntity<LaiResponseDTO> createLai(
-            @RequestBody LaiRequestDTO data, HttpServletRequest request){
+            @RequestBody LaiRequestDTO data, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         String userEmail = laiSevice.extractUserEmailFromToken(token);
 
@@ -65,6 +65,76 @@ public class LaiRestControllor {
         LaiResponseDTO laiResponseDTO = new LaiResponseDTO(newLai);
         return new ResponseEntity<>(laiResponseDTO, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<LaiResponseDTO> editLai(@PathVariable String id,
+                                                  @RequestBody LaiRequestDTO requestDTO
+            , HttpServletRequest request){
+        String token = request.getHeader("Authorization");
+        String userEmail = laiSevice.extractUserEmailFromToken(token);
+
+
+        try {
+            Lai editLai = new Lai();
+            editLai.setUserId(userEmail);
+            editLai.setActivity(requestDTO.activity());
+            editLai.setDescription(requestDTO.description());
+            editLai.setFrequency(requestDTO.frequency());
+            editLai.setDamage(requestDTO.damage());
+            editLai.setStateHolder(requestDTO.stateHolder());
+            editLai.setLegislation(requestDTO.legislation());
+            editLai.setDescriptionOfControl(requestDTO.descriptionOfControl());
+            editLai.setDateOfRevision(requestDTO.dateOfRevision());
+
+            Lai updateLai = laiSevice.editLai(id, editLai);
+            LaiResponseDTO responseDTO = new LaiResponseDTO(updateLai);
+            return ResponseEntity.ok(responseDTO);
+        } catch (RegistroNoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+
+        }
+    }
+
+    @GetMapping("/countTypeOfControl")
+    public ResponseEntity<Map<String, Integer>> counttypeOfControlByOrganizationAndArea(
+            @RequestParam String organization,
+            @RequestParam String area) {
+
+        Map<String, Integer> countMap = laiSevice.countTypeOfControlByOrganizationAndArea(organization, area);
+
+        return new ResponseEntity<>(countMap, HttpStatus.OK);
+    }
+
+    @GetMapping("/countMeaningfulness")
+    public ResponseEntity<Map<String, Map<String, Integer>>> countOrganizationAndMeaningfulnessByArea(
+            @RequestParam String organization,
+            @RequestParam String area
+    ) {
+        Map<String, Map<String, Integer>> countMap = laiSevice.countMeaningfulnessByOrganizationAndArea(organization, area);
+   return new ResponseEntity<>(countMap, HttpStatus.OK);
+    }
+
+    @GetMapping("/organizations")
+    public ResponseEntity<List<String>> getDistinctOrganizations() {
+        List<String> organizations = laiSevice.findDistinctOrganization()
+                .stream()
+                .map(Lai::getOrganization)
+                .distinct()
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(organizations, HttpStatus.OK);
+    }
+
+    @GetMapping("/areas/{organization}")
+    public ResponseEntity<List<String>> getDistinctAreasByOrganization(@PathVariable String organization) {
+        List<Lai> lais = laiSevice.findDistinctAreaByOrganization(organization);
+
+        List<String> distinctAreas = lais.stream()
+                .map(Lai::getArea)
+                .distinct()
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(distinctAreas, HttpStatus.OK);
+    }
+
 
 }
 

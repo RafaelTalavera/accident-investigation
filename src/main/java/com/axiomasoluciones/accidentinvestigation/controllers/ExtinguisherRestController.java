@@ -122,12 +122,7 @@ public class ExtinguisherRestController {
             if (optionalExtinguisher.isPresent()) {
                 Extinguisher existingExtinguisher = optionalExtinguisher.get();
 
-                // Actualizar los campos del extintor existente con los valores proporcionados en la solicitud
                 existingExtinguisher.setDate(requestDTO.date());
-                existingExtinguisher.setEmpresa(requestDTO.empresa());
-                existingExtinguisher.setSector(requestDTO.sector());
-                existingExtinguisher.setExtId(requestDTO.extId());
-                existingExtinguisher.setTipo(requestDTO.tipo());
                 existingExtinguisher.setKg(requestDTO.kg());
                 existingExtinguisher.setVencimiento(requestDTO.vencimiento());
                 existingExtinguisher.setAccess(requestDTO.access());

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record LaiRequestDTO(
         LocalDate date,
-       // String organization,
+        String organization,
         String area,
         String tipo,
         String activity,
@@ -20,7 +20,7 @@ public record LaiRequestDTO(
         String meaningfulness,
         String typeOfControl,
         String descriptionOfControl,
-        String dateOfRevision,
+        LocalDate dateOfRevision,
         String userId
 ) {
 }

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public record LaiResponseDTO(
         String id,
         LocalDate date,
-        //  String organization,
+        String organization,
         String area,
         String tipo,
         String activity,
@@ -23,7 +23,7 @@ public record LaiResponseDTO(
         String meaningfulness,
         String typeOfControl,
         String descriptionOfControl,
-        String dateOfRevision,
+        LocalDate dateOfRevision,
         String userId
 
 ) {
@@ -31,7 +31,7 @@ public record LaiResponseDTO(
         this(
                 lai.getId(),
                 lai.getDate(),
-                // lai.getOrganization(),
+                lai.getOrganization(),
                 lai.getArea(),
                 lai.getTipo(),
                 lai.getActivity(),

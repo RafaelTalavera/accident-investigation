@@ -3,6 +3,7 @@ package com.axiomasoluciones.accidentinvestigation.dto;
 import java.time.LocalDate;
 
 public record RiskRequestDTO(
+        String organization,
         String puesto,
         String area,
         String tarea,
@@ -17,6 +18,7 @@ public record RiskRequestDTO(
         String medidaControl,
         String newControl,
         LocalDate date,
+        LocalDate dateOfRevision,
         String userId
 ) {
 }

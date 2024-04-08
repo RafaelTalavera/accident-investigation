@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public record RiskResponseDTO(
         String id,
+        String organization,
         String puesto,
         String area,
         String tarea,
@@ -18,13 +19,15 @@ public record RiskResponseDTO(
         String evaluacion,
         String clasificaMC,
         String medidaControl,
-        String newControl,
+        //String newControl,
         LocalDate date,
+        LocalDate dateOfRevision,
         String userId
 ) {
     public RiskResponseDTO(Risk risk) {
         this(
                 risk.getId(),
+                risk.getOrganization(),
                 risk.getPuesto(),
                 risk.getArea(),
                 risk.getTarea(),
@@ -37,8 +40,9 @@ public record RiskResponseDTO(
                 risk.getEvaluacion(),
                 risk.getClasificaMC(),
                 risk.getMedidaControl(),
-                risk.getNewControl(),
+               // risk.getNewControl(),
                 risk.getDate(),
+                risk.getDateOfRevision(),
                 risk.getUserId()
         );
     }

@@ -20,7 +20,7 @@ public class Lai {
     @Id
     private String id;
     private LocalDate date;
-   // private String organization;
+    private String organization;
     private String area;
     private String tipo;
     private String activity;
@@ -36,7 +36,7 @@ public class Lai {
     private String meaningfulness;
     private String typeOfControl;
     private String descriptionOfControl;
-    private String dateOfRevision;
+    private LocalDate dateOfRevision;
     private String userId;
 
     @Serial
@@ -44,7 +44,7 @@ public class Lai {
 
     public Lai (LaiRequestDTO laiRequestDTO){
         this.date = laiRequestDTO.date();
-    //    this.organization = laiRequestDTO.organization();
+        this.organization = laiRequestDTO.organization();
         this.area = laiRequestDTO.area();
         this.tipo = laiRequestDTO.tipo();
         this.activity = laiRequestDTO.activity();
@@ -60,11 +60,7 @@ public class Lai {
         this.meaningfulness = laiRequestDTO.meaningfulness();
         this.typeOfControl = laiRequestDTO.typeOfControl();
         this.descriptionOfControl = laiRequestDTO.descriptionOfControl();
-        this.dateOfRevision = laiRequestDTO.dateOfRevision();
+        this.dateOfRevision = laiRequestDTO.dateOfRevision() != null ? laiRequestDTO.dateOfRevision() : LocalDate.now();
         this.userId = laiRequestDTO.userId();
-
-
-
     }
-
 }

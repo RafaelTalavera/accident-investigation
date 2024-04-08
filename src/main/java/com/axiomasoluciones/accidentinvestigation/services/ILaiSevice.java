@@ -4,6 +4,7 @@ import com.axiomasoluciones.accidentinvestigation.models.entity.Lai;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ILaiSevice {
@@ -21,5 +22,13 @@ public interface ILaiSevice {
     String extractUserEmailFromToken(String token);
 
     List<Lai> findByUserId(String userId);
+
+    List<Lai> findDistinctOrganization();
+
+    List<Lai> findDistinctAreaByOrganization(String organization);
+
+    Map<String, Integer> countTypeOfControlByOrganizationAndArea(String organization, String area);
+
+    Map<String, Map<String, Integer>> countMeaningfulnessByOrganizationAndArea(String organization,String area);
 
 }

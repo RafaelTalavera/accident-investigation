@@ -23,8 +23,14 @@ public interface IRiskService {
 
     List<Risk> findByUserId(String userId);
 
-    Map<String, Integer> countClasificaMCByAreaAndPuesto(String area, String puesto);
+    List<Risk> findDistinctOrganization();
 
-    Map<String, Map<String, Integer>> countEvaluacionByAreaAndPuesto(String area, String puesto);
+    List<Risk> findDistinctAreaByOrganization(String organization);
+
+    List<Risk> findDistinctPuestoByOrganizationAndArea(String organization, String area);
+
+    Map<String, Integer> countClasificaMCByOrganizationAndAreaAndPuesto(String organization, String area, String puesto);
+
+    Map<String, Map<String, Integer>> countEvaluacionByOrganizationAndAreaAndPuesto(String organization,String area, String puesto);
 
 }

@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -46,13 +48,13 @@ public class LaiServiceImplements implements ILaiSevice {
 
         // Verificar condiciones para clasificar según las categorías dadas
         if (resultado >= 1 && resultado <= 4 && resultado >= 1 && resultado <= 4) {
-            risk.setEvaluacion("Aceptable");
+            lai.setMeaningfulness("Aceptable");
         } else if (resultado >= 5 && resultado <= 9 && resultado >= 5 && resultado <= 9) {
-            risk.setEvaluacion("Adecuado");
+            lai.setMeaningfulness("Adecuado");
         } else if (resultado >= 10 && resultado <= 16 && resultado >= 10 && resultado <= 16) {
-            risk.setEvaluacion("Tolerable");
+            lai.setMeaningfulness("Tolerable");
         } else if (resultado >= 17 && resultado <= 25 && resultado >= 17 && resultado <= 25) {
-            risk.setEvaluacion("Inaceptable");
+            lai.setMeaningfulness("Inaceptable");
         }
 
         return laiDAO.save(lai);
@@ -71,8 +73,22 @@ public class LaiServiceImplements implements ILaiSevice {
     @Override
     @Transactional
     public Lai editLai(String id, Lai editeLai) {
-        return null;
+        Lai existLai = laiDAO.findById(id)
+                .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
+
+        existLai.setActivity(editeLai.getActivity());
+        existLai.setDescription(editeLai.getDescription());
+        existLai.setFrequency(editeLai.getFrequency());
+        existLai.setDamage(editeLai.getDamage());
+        existLai.setStateHolder(editeLai.getStateHolder());
+        existLai.setLegislation(editeLai.getLegislation());
+        existLai.setDescriptionOfControl(editeLai.getDescriptionOfControl());
+        existLai.setDateOfRevision(editeLai.getDateOfRevision());
+        existLai.setUserId(editeLai.getUserId());
+
+        return laiDAO.save(existLai);
     }
+
 
     @Override
     @Transactional
@@ -92,4 +108,59 @@ public class LaiServiceImplements implements ILaiSevice {
     public List<Lai> findByUserId(String userId) {
         return laiDAO.findByUserId(userId);
     }
+
+    @Override
+    public List<Lai> findDistinctOrganization() {
+        return laiDAO.findDistinctOrganization();
+    }
+
+    @Override
+    public List<Lai> findDistinctAreaByOrganization(String organization) {
+        return laiDAO.findDistinctAreaByOrganization(organization);
+    }
+
+    @Override
+    public Map<String, Integer> countTypeOfControlByOrganizationAndArea(String organization, String area) {
+
+        Map<String, Integer> countMap = new HashMap<>();
+        List<Lai> lais = laiDAO.findByOrganizationAndArea(organization, area);
+
+        for (Lai lai : lais ){
+            String typeOfControl = lai.getTypeOfControl();
+            countMap.put(typeOfControl, countMap.getOrDefault(typeOfControl, 0)+1);
+        }
+
+        return countMap;
+    }
+
+    @Override
+    public Map<String, Map<String, Integer>> countMeaningfulnessByOrganizationAndArea(String organization, String area) {
+        Map<String, Map<String, Integer>> countMap = new HashMap<>();
+        List<Lai> lais = laiDAO.findByOrganizationAndArea(organization, area);
+
+        System.out.println("Documentos encontrados para la organización " + organization + " y área " + area + ":");
+
+        for (Lai lai: lais){
+            String organizacionLai = lai.getOrganization();
+            String areaLai = lai.getArea();
+            String meaningfulness = lai.getMeaningfulness();
+            String key = organizacionLai + " - " + areaLai ;
+
+            // Imprimir valores para depuración
+            System.out.println("Organización: " + organizacionLai);
+            System.out.println("Área: " + areaLai);
+            System.out.println("Meaningfulness: " + meaningfulness);
+            System.out.println("Key: " + key);
+
+            if (!countMap.containsKey(key)){
+                countMap.put(key, new HashMap<>());
+            }
+
+            Map<String, Integer> innerMap = countMap.get(key);
+            innerMap.put(meaningfulness, innerMap.getOrDefault(meaningfulness, 0) + 1);
+        }
+
+        return countMap;
+    }
+
 }

@@ -41,10 +41,8 @@ public class RiskServiceImplements implements IRiskService {
     public Risk save(Risk risk) {
         int gravedad = risk.getGravedad();
         int probabilidad = risk.getProbabilidad();
-
         int resultado = gravedad * probabilidad;
 
-        // Verificar condiciones para clasificar según las categorías dadas
         if (resultado >= 1 && resultado <= 4 && resultado >= 1 && resultado <= 4) {
             risk.setEvaluacion("Aceptable");
         } else if (resultado >= 5 && resultado <= 9 && resultado >= 5 && resultado <= 9) {
@@ -54,8 +52,6 @@ public class RiskServiceImplements implements IRiskService {
         } else if (resultado >= 17 && resultado <= 25 && resultado >= 17 && resultado <= 25) {
             risk.setEvaluacion("Inaceptable");
         }
-
-        // Guardar el objeto Risk en la base de datos
         return riskDao.save(risk);
     }
 
@@ -73,14 +69,32 @@ public class RiskServiceImplements implements IRiskService {
     @Override
     @Transactional
     public Risk editRisk(String id, Risk editedRisk) {
-        return null;
+        Risk existRisk = riskDao.findById(id)
+                .orElseThrow(() -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
+        existRisk.setPuesto(editedRisk.getPuesto());
+        existRisk.setOrganization(editedRisk.getOrganization());
+        existRisk.setArea(editedRisk.getArea());
+        existRisk.setTarea(editedRisk.getTarea());
+        existRisk.setFuente(editedRisk.getFuente());
+        existRisk.setIncidentesPotenciales(editedRisk.getIncidentesPotenciales());
+        existRisk.setConsecuencia(editedRisk.getConsecuencia());
+        existRisk.setTipo(editedRisk.getTipo());
+        existRisk.setProbabilidad(editedRisk.getProbabilidad());
+        existRisk.setGravedad(editedRisk.getGravedad());
+        existRisk.setEvaluacion(editedRisk.getEvaluacion());
+        existRisk.setClasificaMC(editedRisk.getClasificaMC());
+        existRisk.setMedidaControl(editedRisk.getMedidaControl());
+        existRisk.setDate(editedRisk.getDate());
+        existRisk.setDateOfRevision(editedRisk.getDateOfRevision());
+        existRisk.setUserId(editedRisk.getUserId());
+
+        return riskDao.save(existRisk);
     }
 
     @Override
     @Transactional
     public String extractUserEmailFromToken(String token) {
         try {
-            // Remover la palabra "Bearer " del inicio del token
             String jwtToken = token.replace("Bearer ", "");
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwtToken).getBody();
             return claims.get("mail", String.class);
@@ -95,9 +109,25 @@ public class RiskServiceImplements implements IRiskService {
     }
 
     @Override
-    public Map<String, Integer> countClasificaMCByAreaAndPuesto(String area, String puesto) {
+    public List<Risk> findDistinctOrganization() {
+        return riskDao.findDistinctOrganization();
+    }
+
+    @Override
+    public List<Risk> findDistinctAreaByOrganization(String organization) {
+        return riskDao.findDistinctAreaByOrganization(organization);
+    }
+
+    @Override
+    public List<Risk> findDistinctPuestoByOrganizationAndArea(String organization, String area) {
+        return riskDao.findDistinctPuestoByOrganizationAndArea(organization, area);
+    }
+
+
+    @Override
+    public Map<String, Integer> countClasificaMCByOrganizationAndAreaAndPuesto(String organization,String area, String puesto) {
         Map<String, Integer> countMap = new HashMap<>();
-        List<Risk> risks = riskDao.findRiskByAreaAndPuesto(area, puesto);
+        List<Risk> risks = riskDao.findRiskByOrganizationAndAreaAndPuesto(organization,area,puesto);
 
         for (Risk risk : risks) {
             String clasificaMC = risk.getClasificaMC();
@@ -108,15 +138,16 @@ public class RiskServiceImplements implements IRiskService {
     }
 
     @Override
-    public Map<String, Map<String, Integer>> countEvaluacionByAreaAndPuesto(String area, String puesto) {
+    public Map<String, Map<String, Integer>> countEvaluacionByOrganizationAndAreaAndPuesto(String organization, String area, String puesto) {
         Map<String, Map<String, Integer>> countMap = new HashMap<>();
-        List<Risk> risks = riskDao.findRiskByAreaAndPuesto(area, puesto);
+        List<Risk> risks = riskDao.findRiskByOrganizationAndAreaAndPuesto(organization, area, puesto);
 
         for (Risk risk : risks) {
-            String areaRisk = risk.getArea(); // Obtener el área de la instancia de Risk
-            String puestoRisk = risk.getPuesto(); // Obtener el puesto de la instancia de Risk
+            String organizationRisk = risk.getOrganization();
+            String areaRisk = risk.getArea();
+            String puestoRisk = risk.getPuesto();
             String evaluacion = risk.getEvaluacion();
-            String key = areaRisk + " - " + puestoRisk; // Crear una clave única para cada área y puesto
+            String key = organizationRisk + " - " + areaRisk + " - " + puestoRisk;
 
             // Verificar si el área ya está en el map exterior
             if (!countMap.containsKey(key)) {

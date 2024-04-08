@@ -7,8 +7,20 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 public interface IRiskDao extends MongoRepository<Risk, String> {
+
     @Query("{'userId':  {$regex : ?0, $options: 'i'}}")
     List<Risk> findByUserId(String userId);
 
-    List<Risk> findRiskByAreaAndPuesto(String area, String puesto);
+    List<Risk> findRiskByOrganizationAndAreaAndPuesto(String organization, String area, String puesto);
+
+    @Query(value = "{}", fields = "{ 'organization' : 1}")
+    List<Risk> findDistinctOrganization();
+
+    @Query(value = "{'organization': ?0}", fields = "{'area': 1}")
+    List<Risk> findDistinctAreaByOrganization(String organization);
+
+    @Query(value = "{'organization': ?0, 'area': ?1}", fields = "{'puesto': 1}")
+    List<Risk> findDistinctPuestoByOrganizationAndArea(String organization, String area);
+
+
 }
