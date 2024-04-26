@@ -1,6 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.config.security;
 
-import com.axiomasoluciones.accidentinvestigation.models.dao.IUserDao;
+import com.axiomasoluciones.accidentinvestigation.models.dao.IUserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class SecurityBeansInjector {
 
     @Autowired
-    private IUserDao userRepository;
+    private IUserDAO userRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

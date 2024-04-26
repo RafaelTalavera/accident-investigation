@@ -1,9 +1,9 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
 
-import com.axiomasoluciones.accidentinvestigation.dto.ExtinguisherDistributionDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.ExtinguisherRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.ExtinguisherResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.request.ExtinguisherDistributionDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.request.ExtinguisherRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.response.ExtinguisherResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Extinguisher;
 import com.axiomasoluciones.accidentinvestigation.services.IExtinguisherService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +22,61 @@ public class ExtinguisherRestController {
     @Autowired
     private IExtinguisherService service;
 
+    @GetMapping("/list")
+    public ResponseEntity<List<Map<String, Object>>> obtenerTodosLosExtinguishers(HttpServletRequest request) {
+        try {
+            String token = request.getHeader("Authorization");
+            String userEmail = service.extractUserEmailFromToken(token);
+            List<Extinguisher> extinguisherList = service.findByUserId(userEmail);
+
+        if (!extinguisherList.isEmpty()) {
+            List<Map<String, Object>> responseList = extinguisherList .stream()
+                    .map(extinguisher -> {
+                        Map<String, Object> response = new HashMap<>();
+                        response.put("id", extinguisher.getId());
+
+                        if (extinguisher.getDate() != null) {
+                            response.put("date", extinguisher.getDate().toString());
+                        } else {
+                            response.put("date", null);
+                        }
+                        response.put("empresa", extinguisher.getNameOrganization());
+                        response.put("tipo", extinguisher.getTipo());
+                        response.put("sector", extinguisher.getSector());
+
+                        if (extinguisher.getExtId() != null) {
+                            response.put("extId", extinguisher.getExtId());
+                        } else {
+                            response.put("extId", null);
+                        }
+
+                        if (extinguisher.getVencimiento() != null) {
+                            response.put("vencimiento", extinguisher.getVencimiento().toString());
+                        } else {
+                            response.put("vencimiento", null);
+                        }
+                        response.put("kg", extinguisher.getKg());
+                        response.put("access", extinguisher.getAccess());
+                        response.put("signaling", extinguisher.getSignaling());
+                        response.put("presion", extinguisher.getPresion());
+                        response.put("vigente", extinguisher.estaVigente());
+                        response.put("diferenciaEnDias", extinguisher.calcularDiferenciaEnDias());
+                        response.put("observaciones", extinguisher.getObservaciones());
+                        response.put("enabled", extinguisher.getEnabled());
+                        response.put("userId", extinguisher.getUserId());
+                        return response;
+                    })
+                    .collect(Collectors.toList());
+
+            return new ResponseEntity<>(responseList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> obtenerTodosLosExtinguishers() {
         List<Extinguisher> listaExtinguishers = service.findAll();
@@ -37,7 +92,7 @@ public class ExtinguisherRestController {
                         } else {
                             response.put("date", null);
                         }
-                        response.put("empresa", extinguisher.getEmpresa());
+                        response.put("empresa", extinguisher.getNameOrganization());
                         response.put("tipo", extinguisher.getTipo());
                         response.put("sector", extinguisher.getSector());
 
@@ -146,18 +201,18 @@ public class ExtinguisherRestController {
     }
 
 
-    @GetMapping("/{empresa}")
-    public ResponseEntity<List<ExtinguisherDistributionDTO>> getExtinguisherDistributionByEmpresa(
-            @PathVariable String empresa) {
+    @GetMapping("/{nameOrganization}")
+    public ResponseEntity<List<ExtinguisherDistributionDTO>> getExtinguisherDistributionByNameOrgnization(
+            @PathVariable String nameOrganization) {
 
 
-        List<Extinguisher> extinguishersByEmpresa = service.findExtinguisherByEmpresa(empresa);
-        if (extinguishersByEmpresa.isEmpty()) {
+        List<Extinguisher> extinguishersByOrganization = service.findExtinguisherByNameOrganization(nameOrganization);
+        if (extinguishersByOrganization.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
         Map<String, ExtinguisherDistributionDTO> distributionMap = new HashMap<>();
-        for (Extinguisher extinguisher : extinguishersByEmpresa) {
+        for (Extinguisher extinguisher : extinguishersByOrganization) {
             String sector = extinguisher.getSector();
             ExtinguisherDistributionDTO distributionDTO = distributionMap.getOrDefault(sector, new ExtinguisherDistributionDTO(sector, 0, 0, 0, 0, 0));
             // Crear un nuevo registro con los valores actualizados

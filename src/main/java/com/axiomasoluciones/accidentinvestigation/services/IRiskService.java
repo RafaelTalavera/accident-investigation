@@ -25,12 +25,12 @@ public interface IRiskService {
 
     List<Risk> findDistinctOrganization();
 
-    List<Risk> findDistinctAreaByOrganization(String organization);
+    List<Risk> findDistinctAreaByNameOrganization(String nameOrganization);
 
-    List<Risk> findDistinctPuestoByOrganizationAndArea(String organization, String area);
+    List<Risk> findDistinctPuestoByNameOrganizationAndArea(String nameOrganization, String area);
 
-    Map<String, Integer> countClasificaMCByOrganizationAndAreaAndPuesto(String organization, String area, String puesto);
+    Map<String, Integer> countClasificaMCByNameOrganizationAndAreaAndPuesto(String nameOrganization, String area, String puesto);
 
-    Map<String, Map<String, Integer>> countEvaluacionByOrganizationAndAreaAndPuesto(String organization,String area, String puesto);
+    Map<String, Map<String, Integer>> countEvaluacionByNameOrganizationAndAreaAndPuesto(String nameOrganization,String area, String puesto);
 
 }

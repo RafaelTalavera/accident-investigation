@@ -1,15 +1,16 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
-import com.axiomasoluciones.accidentinvestigation.dto.UserRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.UserResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.request.UserRequestDTO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.util.security.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,6 +30,9 @@ public class User implements UserDetails {
     private String id;
     private String username;
     private String password;
+
+    @Indexed(unique = true)
+    @Email(message = "El formato del correo electrónico no es válido")
     private String email;
     private String phone;
     private String fullname;

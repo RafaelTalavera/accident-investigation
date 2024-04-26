@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -40,5 +41,8 @@ public class Ats implements Serializable {
     private String potencial;
     private String riesgos;
     private String control;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
 }

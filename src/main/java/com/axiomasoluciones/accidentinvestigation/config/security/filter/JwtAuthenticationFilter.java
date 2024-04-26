@@ -1,8 +1,8 @@
 package com.axiomasoluciones.accidentinvestigation.config.security.filter;
 
-import com.axiomasoluciones.accidentinvestigation.models.dao.IUserDao;
+import com.axiomasoluciones.accidentinvestigation.models.dao.IUserDAO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
-import com.axiomasoluciones.accidentinvestigation.services.JwtService;
+import com.axiomasoluciones.accidentinvestigation.services.implemets.JwtServiceImplements;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,10 +19,10 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImplements jwtService;
 
     @Autowired
-    private IUserDao userDao;
+    private IUserDAO userDao;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

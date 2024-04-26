@@ -1,6 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
-import com.axiomasoluciones.accidentinvestigation.dto.RiskRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.request.RiskRequestDTO;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +21,8 @@ public class Risk implements Serializable  {
 
     @Id
     private String id;
-    private String organization;
+    private String organizationId;
+    private String nameOrganization;
     private String puesto;
     private String area;
     private String tarea;
@@ -44,7 +45,8 @@ public class Risk implements Serializable  {
 
 public Risk(RiskRequestDTO riskRequestDTO){
     this.puesto = riskRequestDTO.puesto();
-    this.organization = riskRequestDTO.organization();
+    this.organizationId = riskRequestDTO.organizationId();
+    this.nameOrganization = riskRequestDTO.nameOrganization();
     this.area = riskRequestDTO.area();
     this.tarea = riskRequestDTO.tarea();
     this.fuente = riskRequestDTO.fuente();

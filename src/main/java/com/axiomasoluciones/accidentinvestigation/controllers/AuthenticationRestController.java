@@ -1,8 +1,8 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
-import com.axiomasoluciones.accidentinvestigation.dto.AuthenticationRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.AuthenticationResponseDTO;
-import com.axiomasoluciones.accidentinvestigation.services.AuthenticationService;
+import com.axiomasoluciones.accidentinvestigation.dto.request.AuthenticationRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.response.AuthenticationResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.services.implemets.AuthenticationServiceImplemets;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class AuthenticationRestController {
 
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthenticationServiceImplemets authenticationService;
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PreAuthorize("permitAll")

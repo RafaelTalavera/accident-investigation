@@ -1,10 +1,11 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
-import com.axiomasoluciones.accidentinvestigation.dto.EventRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.EventResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.request.EventRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.response.EventResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.*;
 import com.axiomasoluciones.accidentinvestigation.services.*;
+import com.axiomasoluciones.accidentinvestigation.services.implemets.EventServiceImplements;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
     public class EventRestController {
 
         @Autowired
-        private IEventService eventService;
+        private IEventService service;
 
         @Autowired
         private EventServiceImplements eventServiceImplements;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 
         @GetMapping
         public ResponseEntity<List<EventResponseDTO>> getAll(){
-            List<Event> events = eventService.findAll();
+            List<Event> events = service.findAll();
             if (!((List<?>) events).isEmpty()){
                 List<EventResponseDTO> eventResponseDTOS = events.stream()
                         .map(EventResponseDTO::new).collect(Collectors.toList());
@@ -44,9 +45,9 @@ import java.util.stream.Collectors;
     public ResponseEntity<List<EventResponseDTO>> getAll(HttpServletRequest request) {
         try {
             String token = request.getHeader("Authorization");
-            String userEmail = eventService.extractUserEmailFromToken(token);
+            String userEmail = service.extractUserEmailFromToken(token);
 
-            List<Event> events = eventService.findByUserId(userEmail);
+            List<Event> events = service.findByUserId(userEmail);
 
             if (!events.isEmpty()) {
                 List<EventResponseDTO> eventResponseDTOS = events.stream()
@@ -63,7 +64,7 @@ import java.util.stream.Collectors;
     @GetMapping("/{id}/causa")
     public ResponseEntity<String> getCausaById(@PathVariable String id) {
         try {
-            String causa = eventService.getCausa(id);
+            String causa = service.getCausa(id);
             return new ResponseEntity<>(causa, HttpStatus.OK);
         } catch (RegistroNoEncontradoException e) {
             return new ResponseEntity<>("Registro no encontrado: " + e.getMessage(), HttpStatus.NOT_FOUND);
@@ -75,7 +76,7 @@ import java.util.stream.Collectors;
 
     @GetMapping("/{id}")
         public ResponseEntity<EventResponseDTO> getById(@PathVariable String id){
-            Optional<Event> optionalEvent = eventService.findById(id);
+            Optional<Event> optionalEvent = service.findById(id);
 
             if (optionalEvent.isPresent()){
                 Event event = optionalEvent.get();
@@ -88,7 +89,7 @@ import java.util.stream.Collectors;
 
         @DeleteMapping("/{id}")
         public ResponseEntity<String> delete(@PathVariable String id){
-            eventService.deleteById(id);
+            service.deleteById(id);
             return new ResponseEntity<>("Registro eliminado correctamente", HttpStatus.OK);
         }
 
@@ -99,19 +100,19 @@ import java.util.stream.Collectors;
         public ResponseEntity<EventResponseDTO> createEvent
                 (@RequestBody EventRequestDTO data, HttpServletRequest request ){
             String token = request.getHeader("Authorization");
-            String userEmail = eventService.extractUserEmailFromToken(token);
+            String userEmail = service.extractUserEmailFromToken(token);
 
             Event newEvent = new Event(data);
             newEvent.setUserId(userEmail);
 
-            eventService.save(newEvent);
+            service.save(newEvent);
             EventResponseDTO eventResponseDTO = new EventResponseDTO(newEvent);
             return new ResponseEntity<>(eventResponseDTO, HttpStatus.CREATED);
         }
 
     @PutMapping("/{id}/comment")
     public Event editEvent(@PathVariable String id, @RequestBody Event editedEvent) {
-        return eventService.editEvent(id, editedEvent);
+        return service.editEvent(id, editedEvent);
     }
 
     }

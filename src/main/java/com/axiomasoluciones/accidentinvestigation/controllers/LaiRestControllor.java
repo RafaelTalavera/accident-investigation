@@ -1,7 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
-import com.axiomasoluciones.accidentinvestigation.dto.LaiRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.LaiResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.request.LaiRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.response.LaiResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Lai;
 import com.axiomasoluciones.accidentinvestigation.services.ILaiSevice;
@@ -69,7 +69,7 @@ public class LaiRestControllor {
     @PutMapping("/{id}/edit")
     public ResponseEntity<LaiResponseDTO> editLai(@PathVariable String id,
                                                   @RequestBody LaiRequestDTO requestDTO
-            , HttpServletRequest request){
+            , HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         String userEmail = laiSevice.extractUserEmailFromToken(token);
 
@@ -97,44 +97,72 @@ public class LaiRestControllor {
 
     @GetMapping("/countTypeOfControl")
     public ResponseEntity<Map<String, Integer>> counttypeOfControlByOrganizationAndArea(
-            @RequestParam String organization,
-            @RequestParam String area) {
+            @RequestParam String nameOrganization,
+            @RequestParam String area, HttpServletRequest request) {
 
-        Map<String, Integer> countMap = laiSevice.countTypeOfControlByOrganizationAndArea(organization, area);
+        String token = request.getHeader("Authorization");
+        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        try {
+            Map<String, Integer> countMap = laiSevice.countTypeOfControlByNameOrganizationAndArea(nameOrganization, area);
 
-        return new ResponseEntity<>(countMap, HttpStatus.OK);
+            return new ResponseEntity<>(countMap, HttpStatus.OK);
+        } catch (RegistroNoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+
+        }
     }
 
     @GetMapping("/countMeaningfulness")
-    public ResponseEntity<Map<String, Map<String, Integer>>> countOrganizationAndMeaningfulnessByArea(
-            @RequestParam String organization,
-            @RequestParam String area
+    public ResponseEntity<Map<String, Map<String, Integer>>> countNameOrganizationAndMeaningfulnessByArea(
+            @RequestParam String nameOrganization,
+            @RequestParam String area, HttpServletRequest request
     ) {
-        Map<String, Map<String, Integer>> countMap = laiSevice.countMeaningfulnessByOrganizationAndArea(organization, area);
-   return new ResponseEntity<>(countMap, HttpStatus.OK);
+
+        String token = request.getHeader("Authorization");
+        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        try {
+            Map<String, Map<String, Integer>> countMap = laiSevice.countMeaningfulnessByNameOrganizationAndArea(nameOrganization, area);
+            return new ResponseEntity<>(countMap, HttpStatus.OK);
+        } catch (RegistroNoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping("/organizations")
-    public ResponseEntity<List<String>> getDistinctOrganizations() {
-        List<String> organizations = laiSevice.findDistinctOrganization()
-                .stream()
-                .map(Lai::getOrganization)
-                .distinct()
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(organizations, HttpStatus.OK);
+    @GetMapping("/nameOrganizations")
+    public ResponseEntity<List<String>> getDistinctNameOrganizations(HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization");
+        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        try {
+            List<String> organizations = laiSevice.findDistinctOrganization()
+                    .stream()
+                    .map(Lai::getNameOrganization)
+                    .distinct()
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(organizations, HttpStatus.OK);
+        } catch (RegistroNoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping("/areas/{organization}")
-    public ResponseEntity<List<String>> getDistinctAreasByOrganization(@PathVariable String organization) {
-        List<Lai> lais = laiSevice.findDistinctAreaByOrganization(organization);
+    @GetMapping("/areas/{nameOrganization}")
+    public ResponseEntity<List<String>> getDistinctAreasByNameOrganization(
+            @PathVariable String nameOrganization,
+            HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        try {
+            List<Lai> lais = laiSevice.findDistinctAreaByNameOrganization(nameOrganization);
 
-        List<String> distinctAreas = lais.stream()
-                .map(Lai::getArea)
-                .distinct()
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(distinctAreas, HttpStatus.OK);
+            List<String> distinctAreas = lais.stream()
+                    .map(Lai::getArea)
+                    .distinct()
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(distinctAreas, HttpStatus.OK);
+
+        } catch (RegistroNoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-
-
 }
 

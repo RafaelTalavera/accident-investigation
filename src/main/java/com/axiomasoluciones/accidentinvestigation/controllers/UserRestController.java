@@ -1,7 +1,7 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
-import com.axiomasoluciones.accidentinvestigation.dto.UserRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.UserResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.request.UserRequestDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.response.UserResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
 import com.axiomasoluciones.accidentinvestigation.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,7 @@ public class UserRestController {
 
         User newUser = new User(data);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-
         userService.createUser(newUser);
-
         UserResponseDTO userResponseDTO = new UserResponseDTO(newUser);
 
         return new ResponseEntity<>(userResponseDTO, HttpStatus.CREATED);

@@ -22,17 +22,17 @@ public interface IExtinguisherService {
 
     public List<Extinguisher> findByUserId(String userId);
 
-    List<Extinguisher> findExtinguisherByEmpresa(String empresa);
+    List<Extinguisher> findExtinguisherByNameOrganization(String nameOrganization);
 
-    int countByEmpresaAndSector(String empresa, String sector);
+    int countByNameOrganizationAndSector(String nameOrganization, String sector);
 
-    int countVigentesByEmpresaAndSector(String empresa, String sector);
+    int countVigentesByNameOrganizationAndSector(String nameOrganization, String sector);
 
-    int countVencidosByEmpresaAndSector(String empresa, String sector);
+    int countVencidosByNameOrganizationAndSector(String nameOrganization, String sector);
 
     int countByTipoAndEnabled(String tipo, boolean enabled);
 
-    int countEnabledByEmpresaAndSector(String empresa, String sector);
+    int countEnabledByNameOrganizationAndSector(String nameOrganization, String sector);
 
     List<String> findAllCompanies();
 

@@ -11,7 +11,7 @@ public interface ILaiSevice {
 
     public List<Lai> findAll();
 
-    public Optional<Lai> findAll(String id);
+    public Optional<Lai> findById(String id);
 
     public Lai save(Lai lai);
 
@@ -25,10 +25,10 @@ public interface ILaiSevice {
 
     List<Lai> findDistinctOrganization();
 
-    List<Lai> findDistinctAreaByOrganization(String organization);
+    List<Lai> findDistinctAreaByNameOrganization(String nameOrganization);
 
-    Map<String, Integer> countTypeOfControlByOrganizationAndArea(String organization, String area);
+    Map<String, Integer> countTypeOfControlByNameOrganizationAndArea(String nameOrganization, String area);
 
-    Map<String, Map<String, Integer>> countMeaningfulnessByOrganizationAndArea(String organization,String area);
+    Map<String, Map<String, Integer>> countMeaningfulnessByNameOrganizationAndArea(String nameOrganization,String area);
 
 }

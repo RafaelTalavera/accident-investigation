@@ -1,7 +1,5 @@
 package com.axiomasoluciones.accidentinvestigation.services;
 
-import com.axiomasoluciones.accidentinvestigation.dto.UserRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.dto.UserResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
 
 import java.util.List;

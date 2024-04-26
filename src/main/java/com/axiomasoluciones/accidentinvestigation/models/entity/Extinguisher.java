@@ -1,7 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
-import com.axiomasoluciones.accidentinvestigation.dto.ExtinguisherRequestDTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.axiomasoluciones.accidentinvestigation.dto.request.ExtinguisherRequestDTO;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -18,12 +19,13 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
-public class Extinguisher {
+public class Extinguisher implements Serializable  {
 
     @Id
     private String id;
     private LocalDate date;
-    private String empresa;
+    private String organizationId;
+    private String nameOrganization;
     private String sector;
     private String extId;
     private String tipo;
@@ -36,9 +38,13 @@ public class Extinguisher {
     private Boolean enabled;
     private String userId;
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     public Extinguisher(ExtinguisherRequestDTO extinguisherRequestDTO){
         this.date = extinguisherRequestDTO.date();
-        this.empresa = extinguisherRequestDTO.empresa();
+        this.organizationId = extinguisherRequestDTO.organizationId();
+        this.nameOrganization = extinguisherRequestDTO.nameOrganization();
         this.sector = extinguisherRequestDTO.sector();
         this.extId = extinguisherRequestDTO.extId();
         this.tipo = extinguisherRequestDTO.tipo();

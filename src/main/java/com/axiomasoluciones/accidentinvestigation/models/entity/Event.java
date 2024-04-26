@@ -1,7 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
-import com.axiomasoluciones.accidentinvestigation.dto.EventRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.*;
+import com.axiomasoluciones.accidentinvestigation.dto.request.EventRequestDTO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -70,7 +69,6 @@ public class Event implements Serializable {
         this.fails = eventRequestDTO.fails();
         this.userId = eventRequestDTO.userId();
         this.comment = eventRequestDTO.comment();
-
     }
 
     @Serial
