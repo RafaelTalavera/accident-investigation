@@ -54,6 +54,31 @@ public class RiskRestController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PreAuthorize("permitAll")
+    @GetMapping("/organization/{name}")
+    public ResponseEntity<List<RiskResponseDTO>> getRisksByUserAndOrganization(
+            HttpServletRequest request,
+            @PathVariable("name") String nameOrganization) {
+        try {
+            String token = request.getHeader("Authorization");
+            String userId = service.extractUserEmailFromToken(token);
+
+            List<Risk> risks = service.findRiskByUserIdAndNameOrganization(userId, nameOrganization);
+            if (!risks.isEmpty()) {
+
+                List<RiskResponseDTO> riskResponseDTOS = risks.stream()
+                        .map(RiskResponseDTO::new)
+                        .collect(Collectors.toList());
+                return new ResponseEntity<>(riskResponseDTOS, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PreAuthorize("permitAll")
     @PostMapping
     public ResponseEntity<RiskResponseDTO> createRisk(
@@ -81,7 +106,6 @@ public class RiskRestController {
             editRisk.setPuesto(requestDTO.puesto());
             editRisk.setArea(requestDTO.area());
             editRisk.setTarea(requestDTO.tarea());
-            editRisk.setFuente(requestDTO.fuente());
             editRisk.setIncidentesPotenciales(requestDTO.incidentesPotenciales());
             editRisk.setConsecuencia(requestDTO.consecuencia());
             editRisk.setTipo(requestDTO.tipo());
@@ -90,7 +114,6 @@ public class RiskRestController {
             editRisk.setEvaluacion(requestDTO.evaluacion());
             editRisk.setClasificaMC(requestDTO.clasificaMC());
             editRisk.setMedidaControl(requestDTO.medidaControl());
-         //   editRisk.setNewControl(requestDTO.newControl());
             editRisk.setDate(requestDTO.date());
             editRisk.setDateOfRevision(requestDTO.dateOfRevision());
 
@@ -122,8 +145,12 @@ public class RiskRestController {
     }
 
     @GetMapping("/organizations")
-    public ResponseEntity<List<String>> getDistinctOrganizations() {
-        List<String> organizations = service.findDistinctOrganization()
+    public ResponseEntity<List<String>> getDistinctOrganizations(HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization");
+        String userId = service.extractUserEmailFromToken(token);
+
+        List<String> organizations = service.findDistinctOrganizationByUserId(userId)
                 .stream()
                 .map(Risk::getNameOrganization)
                 .distinct()

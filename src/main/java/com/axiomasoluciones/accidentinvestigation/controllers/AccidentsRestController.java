@@ -2,14 +2,17 @@ package com.axiomasoluciones.accidentinvestigation.controllers;
 
 import com.axiomasoluciones.accidentinvestigation.dto.request.AccidentsRequestDTO;
 import com.axiomasoluciones.accidentinvestigation.dto.response.AccidentsResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.response.RiskResponseDTO;
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Accidents;
 import com.axiomasoluciones.accidentinvestigation.models.entity.AccidentMonthlySummary;
+import com.axiomasoluciones.accidentinvestigation.models.entity.Risk;
 import com.axiomasoluciones.accidentinvestigation.services.IAccidentsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,6 +81,30 @@ public class AccidentsRestController {
         service.save(newAccidents);
         AccidentsResponseDTO accidetsResponseDTO = new AccidentsResponseDTO(newAccidents);
         return new ResponseEntity<>(accidetsResponseDTO, HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("permitAll")
+    @GetMapping("/organization/{name}")
+    public ResponseEntity<List<AccidentsResponseDTO>> getAccidentsByUserAndOrganization(
+            HttpServletRequest request,
+            @PathVariable("name") String nameOrganization) {
+        try {
+            String token = request.getHeader("Authorization");
+            String userId = service.extractUserEmailFromToken(token);
+
+            List<Accidents> accidents = service.findAccidentsByUserIdAndNameOrganization(userId, nameOrganization);
+            if (!accidents.isEmpty()) {
+
+                List<AccidentsResponseDTO> accidentsResponseDTOS = accidents.stream()
+                        .map(AccidentsResponseDTO::new)
+                        .collect(Collectors.toList());
+                return new ResponseEntity<>(accidentsResponseDTOS, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/summary")

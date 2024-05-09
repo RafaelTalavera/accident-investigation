@@ -8,7 +8,6 @@ public record RiskRequestDTO(
         String puesto,
         String area,
         String tarea,
-        String fuente,
         String incidentesPotenciales,
         String consecuencia,
         String tipo,

@@ -1,5 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.services;
 
+import com.axiomasoluciones.accidentinvestigation.models.entity.Risk;
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
 
 import java.util.List;
@@ -14,4 +15,10 @@ public interface IUserService {
     User createUser(User user);
 
     public void delete(User user);
+
+    User editeUser(String id, User editedUser);
+
+    String extractUserEmailFromToken(String token);
+
+    Optional<User> findUserByEmail(String email);
 }

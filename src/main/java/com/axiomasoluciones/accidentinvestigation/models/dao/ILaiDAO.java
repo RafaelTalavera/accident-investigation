@@ -13,12 +13,14 @@ public interface ILaiDAO extends MongoRepository<Lai, String> {
 
     List<Lai> findByNameOrganizationAndArea(String nameOrganization,String area);
 
-    @Query(value = "{}", fields = "{ 'nameOrganization' : 1}")
-    List<Lai> findDistinctNameOrganization();
+    @Query(value = "{'userId': ?0}", fields = "{ 'nameOrganization' : 1}")
+    List<Lai> findDistinctOrganizationByUserId(String userId);
 
     @Query(value = "{'nameOrganization': ?0}", fields = "{'area': 1}")
     List<Lai> findDistinctAreaByNameOrganization(String nameOrganization);
 
     @Query(value = "{'nameOrganizationorganization': ?0, 'area': ?1}", fields = "{'puesto': 1}")
     List<Lai> findDistinctPuestoByONameOrganizationAndArea(String nameOrganization, String area);
+
+    List<Lai> findLaiByUserIdAndNameOrganization(String userId, String nameOrganization);
 }

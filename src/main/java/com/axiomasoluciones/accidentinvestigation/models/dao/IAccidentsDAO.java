@@ -26,4 +26,6 @@ public interface IAccidentsDAO extends MongoRepository<Accidents,String> {
 
     @Query("{'nameOrganization': ?0, 'yearEvent': ?1, 'monthEvent': ?2}")
     List<Accidents> findByOrganizationAndYearAndMonth(String organization, int year, int month);
+
+    List<Accidents> findAccidentsByUserIdAndNameOrganization(String userId, String nameOrganization);
 }

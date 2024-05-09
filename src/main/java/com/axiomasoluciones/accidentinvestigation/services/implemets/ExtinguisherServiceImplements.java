@@ -157,11 +157,18 @@ public class ExtinguisherServiceImplements implements IExtinguisherService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<String> findAllCompanies() {
-        List<Extinguisher> extinguishers = (List<Extinguisher>) extinguisherDao.findAll();
+    public List<String> findCompaniesByUserId(String userId) {
+        List<Extinguisher> extinguishers = extinguisherDao.findCompaniesByUserId(userId);
         return extinguishers.stream()
                 .map(Extinguisher::getNameOrganization) // Obtener solo el nombre de la empresa
                 .distinct() // Eliminar duplicados
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Extinguisher> findExtinguisherByUserIdAndNameOrganization(String userId, String nameOrganization) {
+        return extinguisherDao.findExtinguisherByUserIdAndNameOrganization(userId, nameOrganization);
+    }
+
 }

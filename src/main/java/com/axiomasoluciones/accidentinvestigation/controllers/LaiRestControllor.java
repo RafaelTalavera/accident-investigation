@@ -2,13 +2,16 @@ package com.axiomasoluciones.accidentinvestigation.controllers;
 
 import com.axiomasoluciones.accidentinvestigation.dto.request.LaiRequestDTO;
 import com.axiomasoluciones.accidentinvestigation.dto.response.LaiResponseDTO;
+
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Lai;
+
 import com.axiomasoluciones.accidentinvestigation.services.ILaiSevice;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +25,11 @@ import java.util.stream.Collectors;
 public class LaiRestControllor {
 
     @Autowired
-    private ILaiSevice laiSevice;
+    private ILaiSevice service;
 
     @GetMapping
     public ResponseEntity<List<LaiResponseDTO>> getAll() {
-        List<Lai> lais = laiSevice.findAll();
+        List<Lai> lais = service.findAll();
         if (!((List<?>) lais).isEmpty()) {
             List<LaiResponseDTO> laiResponseDTOS = lais.stream().map(LaiResponseDTO::new).collect(Collectors.toList());
             return new ResponseEntity<>(laiResponseDTOS, HttpStatus.OK);
@@ -39,10 +42,34 @@ public class LaiRestControllor {
     public ResponseEntity<List<LaiResponseDTO>> getAll(HttpServletRequest request) {
         try {
             String token = request.getHeader("Authorization");
-            String userEmail = laiSevice.extractUserEmailFromToken(token);
-            List<Lai> lais = laiSevice.findByUserId(userEmail);
+            String userEmail = service.extractUserEmailFromToken(token);
+            List<Lai> lais = service.findByUserId(userEmail);
             if (!lais.isEmpty()) {
                 List<LaiResponseDTO> laiResponseDTOS = lais.stream().map(LaiResponseDTO::new).collect(Collectors.toList());
+                return new ResponseEntity<>(laiResponseDTOS, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PreAuthorize("permitAll")
+    @GetMapping("/organization/{name}")
+    public ResponseEntity<List<LaiResponseDTO>> getLaisByUserAndOrganization(
+            HttpServletRequest request,
+            @PathVariable("name") String nameOrganization) {
+        try {
+            String token = request.getHeader("Authorization");
+            String userId = service.extractUserEmailFromToken(token);
+
+            List<Lai> lais = service.findLaiByUserIdAndNameOrganization(userId, nameOrganization);
+            if (!lais.isEmpty()) {
+
+                List<LaiResponseDTO> laiResponseDTOS = lais.stream()
+                        .map(LaiResponseDTO::new)
+                        .collect(Collectors.toList());
                 return new ResponseEntity<>(laiResponseDTOS, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -56,12 +83,12 @@ public class LaiRestControllor {
     public ResponseEntity<LaiResponseDTO> createLai(
             @RequestBody LaiRequestDTO data, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        String userEmail = service.extractUserEmailFromToken(token);
 
         Lai newLai = new Lai(data);
         newLai.setUserId(userEmail);
 
-        laiSevice.save(newLai);
+        service.save(newLai);
         LaiResponseDTO laiResponseDTO = new LaiResponseDTO(newLai);
         return new ResponseEntity<>(laiResponseDTO, HttpStatus.CREATED);
     }
@@ -71,7 +98,7 @@ public class LaiRestControllor {
                                                   @RequestBody LaiRequestDTO requestDTO
             , HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        String userEmail = service.extractUserEmailFromToken(token);
 
 
         try {
@@ -86,7 +113,7 @@ public class LaiRestControllor {
             editLai.setDescriptionOfControl(requestDTO.descriptionOfControl());
             editLai.setDateOfRevision(requestDTO.dateOfRevision());
 
-            Lai updateLai = laiSevice.editLai(id, editLai);
+            Lai updateLai = service.editLai(id, editLai);
             LaiResponseDTO responseDTO = new LaiResponseDTO(updateLai);
             return ResponseEntity.ok(responseDTO);
         } catch (RegistroNoEncontradoException e) {
@@ -101,9 +128,9 @@ public class LaiRestControllor {
             @RequestParam String area, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization");
-        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        String userEmail = service.extractUserEmailFromToken(token);
         try {
-            Map<String, Integer> countMap = laiSevice.countTypeOfControlByNameOrganizationAndArea(nameOrganization, area);
+            Map<String, Integer> countMap = service.countTypeOfControlByNameOrganizationAndArea(nameOrganization, area);
 
             return new ResponseEntity<>(countMap, HttpStatus.OK);
         } catch (RegistroNoEncontradoException e) {
@@ -119,9 +146,9 @@ public class LaiRestControllor {
     ) {
 
         String token = request.getHeader("Authorization");
-        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        String userEmail = service.extractUserEmailFromToken(token);
         try {
-            Map<String, Map<String, Integer>> countMap = laiSevice.countMeaningfulnessByNameOrganizationAndArea(nameOrganization, area);
+            Map<String, Map<String, Integer>> countMap = service.countMeaningfulnessByNameOrganizationAndArea(nameOrganization, area);
             return new ResponseEntity<>(countMap, HttpStatus.OK);
         } catch (RegistroNoEncontradoException e) {
             return ResponseEntity.notFound().build();
@@ -132,9 +159,10 @@ public class LaiRestControllor {
     public ResponseEntity<List<String>> getDistinctNameOrganizations(HttpServletRequest request) {
 
         String token = request.getHeader("Authorization");
-        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        String userId = service.extractUserEmailFromToken(token);
+
         try {
-            List<String> organizations = laiSevice.findDistinctOrganization()
+            List<String> organizations = service.findDistinctOrganizationByUserId(userId)
                     .stream()
                     .map(Lai::getNameOrganization)
                     .distinct()
@@ -150,9 +178,9 @@ public class LaiRestControllor {
             @PathVariable String nameOrganization,
             HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        String userEmail = laiSevice.extractUserEmailFromToken(token);
+        String userEmail = service.extractUserEmailFromToken(token);
         try {
-            List<Lai> lais = laiSevice.findDistinctAreaByNameOrganization(nameOrganization);
+            List<Lai> lais = service.findDistinctAreaByNameOrganization(nameOrganization);
 
             List<String> distinctAreas = lais.stream()
                     .map(Lai::getArea)

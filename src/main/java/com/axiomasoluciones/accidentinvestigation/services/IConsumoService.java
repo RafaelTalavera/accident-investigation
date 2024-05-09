@@ -23,7 +23,7 @@ public interface IConsumoService {
 
     List<Consumo> findByUserID(String userId);
 
-    List<Consumo> findDistinctOrganization();
+    List<Consumo> findDistinctOrganizationByUserId(String userId);
 
     Map<String, Map<Integer, Map<String, Map<String, Double>>>> obtenerConsumoTotalPorCombustibleAñoMes();
 
@@ -36,5 +36,7 @@ public interface IConsumoService {
             String combustible,
             String unidad
     );
+
+    List<Consumo> findConsumoByUserIdAndNameOrganization(String userId, String nameOrganization);
 
 }

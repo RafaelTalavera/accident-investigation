@@ -34,6 +34,7 @@ public interface IExtinguisherService {
 
     int countEnabledByNameOrganizationAndSector(String nameOrganization, String sector);
 
-    List<String> findAllCompanies();
+    List<String> findCompaniesByUserId(String userId);
 
+    List<Extinguisher> findExtinguisherByUserIdAndNameOrganization(String userId, String nameOrganization);
 }

@@ -26,7 +26,6 @@ public class Risk implements Serializable  {
     private String puesto;
     private String area;
     private String tarea;
-    private String fuente;
     private String incidentesPotenciales;
     private String consecuencia;
     private String tipo;
@@ -35,7 +34,6 @@ public class Risk implements Serializable  {
     private String evaluacion;
     private String clasificaMC;
     private String medidaControl;
-   // private String newControl;
     private LocalDate date;
     private LocalDate dateOfRevision;
     private String userId;
@@ -49,7 +47,6 @@ public Risk(RiskRequestDTO riskRequestDTO){
     this.nameOrganization = riskRequestDTO.nameOrganization();
     this.area = riskRequestDTO.area();
     this.tarea = riskRequestDTO.tarea();
-    this.fuente = riskRequestDTO.fuente();
     this.incidentesPotenciales = riskRequestDTO.incidentesPotenciales();
     this.consecuencia = riskRequestDTO.consecuencia();
     this.tipo = riskRequestDTO.tipo();
@@ -58,7 +55,6 @@ public Risk(RiskRequestDTO riskRequestDTO){
     this.evaluacion = riskRequestDTO.evaluacion();
     this.clasificaMC = riskRequestDTO.clasificaMC();
     this.medidaControl = riskRequestDTO.medidaControl();
-  //  this.newControl = riskRequestDTO.newControl();
     this.date = riskRequestDTO.date();
     this.dateOfRevision = riskRequestDTO.dateOfRevision() != null ? riskRequestDTO.dateOfRevision() : LocalDate.now();
     this.userId = riskRequestDTO.userId();

@@ -1,6 +1,8 @@
 package com.axiomasoluciones.accidentinvestigation.controllers;
 
 import com.axiomasoluciones.accidentinvestigation.dto.response.ConsumoDTO;
+import com.axiomasoluciones.accidentinvestigation.dto.response.RiskResponseDTO;
+import com.axiomasoluciones.accidentinvestigation.models.entity.Risk;
 import com.axiomasoluciones.accidentinvestigation.services.implemets.ConsumoServiceImplements;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.axiomasoluciones.accidentinvestigation.dto.request.ConsumoRequestDTO;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -57,6 +60,45 @@ public class ConsumoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/organization/{name}")
+    public ResponseEntity<List<Map<String, Object>>> getConsumosByUserAndOrganization(
+            HttpServletRequest request,
+            @PathVariable("name") String nameOrganization) {
+        try {
+            String token = request.getHeader("Authorization");
+            String userId = service.extractUserEmailFromToken(token);
+
+            List<Consumo> consumos = service.findConsumoByUserIdAndNameOrganization(userId, nameOrganization);
+            if (!consumos.isEmpty()) {
+                List<Map<String, Object>> responseList = consumos.stream()
+                        .map(consumo -> {
+                            Map<String, Object> response = new HashMap<>();
+                            response.put("id", consumo.getId());
+                            response.put("date", consumo.getDate() != null ? consumo.getDate().toString() : null);
+                            response.put("organizationId", consumo.getOrganizationId());
+                            response.put("nameOrganization", consumo.getNameOrganization());
+                            response.put("fuente", consumo.getFuente());
+                            response.put("tipoFuente", consumo.getTipoFuente());
+                            response.put("combustible", consumo.getCombustible());
+                            response.put("unidad", consumo.getUnidad());
+                            response.put("month", consumo.getMonth());
+                            response.put("year", consumo.getYear());
+                            response.put("consumo", consumo.getConsumo() != null ? consumo.getConsumo() : null);
+                            response.put("userId", consumo.getUserId());
+                            return response;
+                        })
+                        .collect(Collectors.toList());
+
+                return new ResponseEntity<>(responseList, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping("/list")
     public ResponseEntity<List<Map<String, Object>>> obtenerTodosLosConsumos(HttpServletRequest request) {
@@ -106,7 +148,7 @@ public class ConsumoController {
                                                    HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         String userEmail = service.extractUserEmailFromToken(token);
-        
+
         Consumo newInventario = new Consumo(data);
         newInventario.setUserId(userEmail);
         service.save(newInventario);
@@ -180,14 +222,16 @@ public class ConsumoController {
     public ResponseEntity<List<String>> getDistincOrganizations(HttpServletRequest request) {
 
         String token = request.getHeader("Authorization");
-        String userEmail = service.extractUserEmailFromToken(token);
+        String userId = service.extractUserEmailFromToken(token);
+
         try {
-        List<String> nameOrganization = service.findDistinctOrganization()
-                .stream()
-                .map(Consumo::getNameOrganization)
-                .distinct()
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(nameOrganization, HttpStatus.OK);
+            List<Consumo> consumos = service.findDistinctOrganizationByUserId(userId);
+            List<String> nameOrganizations = consumos.stream()
+                    .map(Consumo::getNameOrganization)
+                    .distinct()
+                    .collect(Collectors.toList());
+
+            return new ResponseEntity<>(nameOrganizations, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

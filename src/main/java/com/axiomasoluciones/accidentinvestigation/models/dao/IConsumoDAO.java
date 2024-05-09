@@ -13,8 +13,8 @@ public interface IConsumoDAO extends MongoRepository<Consumo, String> {
     @Query("{'userId':  {$regex : ?0, $options: 'i'}}")
     List<Consumo> findByUserId(String userId);
 
-    @Query(value = "{}", fields = "{ 'nameOrganization' : 1}")
-    List<Consumo> findDistinctOrganization();
+    @Query(value = "{'userId': ?0}", fields = "{ 'nameOrganization' : 1}")
+    List<Consumo> findDistinctOrganizationByUserId(String userId);
 
     @Query(value = "{'nameOrganization': ?0} {'combustible': {'$regex' : '.*', '$options': 'i'}, '_id': 0}")
     List<String> findDistinctCombustibleByNameOrganization(String nameOrganization);
@@ -36,5 +36,6 @@ public interface IConsumoDAO extends MongoRepository<Consumo, String> {
             String unidad
     );
 
+    List<Consumo> findConsumoByUserIdAndNameOrganization(String userId, String nameOrganization);
 
 }

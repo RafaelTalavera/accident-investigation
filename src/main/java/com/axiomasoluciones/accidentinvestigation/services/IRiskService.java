@@ -23,7 +23,7 @@ public interface IRiskService {
 
     List<Risk> findByUserId(String userId);
 
-    List<Risk> findDistinctOrganization();
+    List<Risk> findDistinctOrganizationByUserId(String userId);
 
     List<Risk> findDistinctAreaByNameOrganization(String nameOrganization);
 
@@ -32,5 +32,7 @@ public interface IRiskService {
     Map<String, Integer> countClasificaMCByNameOrganizationAndAreaAndPuesto(String nameOrganization, String area, String puesto);
 
     Map<String, Map<String, Integer>> countEvaluacionByNameOrganizationAndAreaAndPuesto(String nameOrganization,String area, String puesto);
+
+    List<Risk> findRiskByUserIdAndNameOrganization(String userId, String nameOrganization);
 
 }

@@ -102,8 +102,8 @@ public class ConsumoServiceImplements implements IConsumoService {
     }
 
     @Override
-    public List<Consumo> findDistinctOrganization() {
-        return consumoDAO.findDistinctOrganization();
+    public  List<Consumo> findDistinctOrganizationByUserId(String userId) {
+        return consumoDAO.findDistinctOrganizationByUserId(userId);
     }
 
     @Override
@@ -184,6 +184,11 @@ public class ConsumoServiceImplements implements IConsumoService {
     @Override
     public List<Consumo> findConsumoByOrganizationCombustibleAndUnidad(String nameOrganization, String combustible, String unidad) {
         return consumoDAO.findConsumoByOrganizationCombustibleAndUnidad(nameOrganization, combustible, unidad);
+    }
+
+    @Override
+    public List<Consumo> findConsumoByUserIdAndNameOrganization(String userId, String nameOrganization) {
+        return consumoDAO.findConsumoByUserIdAndNameOrganization(userId, nameOrganization);
     }
 
     public List<ConsumoDTO> getTotalConsumoByOrganizationCombustibleAndUnidad(

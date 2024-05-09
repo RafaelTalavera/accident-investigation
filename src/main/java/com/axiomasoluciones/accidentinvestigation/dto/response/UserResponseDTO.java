@@ -10,6 +10,7 @@ public record UserResponseDTO(
         String email,
         String phone,
         String fullname,
+        String firebase,
 
         Role role
 ) {
@@ -20,6 +21,7 @@ public record UserResponseDTO(
                 user.getEmail(),
                 user.getPhone(),
                 user.getFullname(),
+                user.getFirebase(),
                 Role.ADMINISTRATOR);
     }
 }

@@ -3,6 +3,7 @@ package com.axiomasoluciones.accidentinvestigation.services;
 import com.axiomasoluciones.accidentinvestigation.models.entity.Accidents;
 import com.axiomasoluciones.accidentinvestigation.models.entity.AccidentMonthlySummary;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +28,7 @@ public interface IAccidentsService {
     public List<AccidentMonthlySummary> getMonthlyAccidentSummary(String nameOrganization);
 
     Accidents editAccidents(String id, Accidents editedAccidents);
+
+    List<Accidents> findAccidentsByUserIdAndNameOrganization(String userId, String nameOrganization);
 
 }

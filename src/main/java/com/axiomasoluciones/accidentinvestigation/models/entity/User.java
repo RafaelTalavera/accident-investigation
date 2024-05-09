@@ -36,6 +36,7 @@ public class User implements UserDetails {
     private String email;
     private String phone;
     private String fullname;
+    private String firebase;
 
     //Esta anotación es para que en vez de guardar el valor ordinal traiga el nombre.
     @Enumerated(EnumType.STRING)
@@ -48,6 +49,7 @@ public class User implements UserDetails {
         this.phone = userRequestDTO.phone();
         this.fullname = userRequestDTO.fullname();
         this.role = userRequestDTO.role();
+        this.firebase = userRequestDTO.firebase();
     }
 
 

@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -29,49 +30,49 @@ public class ExtinguisherRestController {
             String userEmail = service.extractUserEmailFromToken(token);
             List<Extinguisher> extinguisherList = service.findByUserId(userEmail);
 
-        if (!extinguisherList.isEmpty()) {
-            List<Map<String, Object>> responseList = extinguisherList .stream()
-                    .map(extinguisher -> {
-                        Map<String, Object> response = new HashMap<>();
-                        response.put("id", extinguisher.getId());
+            if (!extinguisherList.isEmpty()) {
+                List<Map<String, Object>> responseList = extinguisherList.stream()
+                        .map(extinguisher -> {
+                            Map<String, Object> response = new HashMap<>();
+                            response.put("id", extinguisher.getId());
 
-                        if (extinguisher.getDate() != null) {
-                            response.put("date", extinguisher.getDate().toString());
-                        } else {
-                            response.put("date", null);
-                        }
-                        response.put("empresa", extinguisher.getNameOrganization());
-                        response.put("tipo", extinguisher.getTipo());
-                        response.put("sector", extinguisher.getSector());
+                            if (extinguisher.getDate() != null) {
+                                response.put("date", extinguisher.getDate().toString());
+                            } else {
+                                response.put("date", null);
+                            }
+                            response.put("empresa", extinguisher.getNameOrganization());
+                            response.put("tipo", extinguisher.getTipo());
+                            response.put("sector", extinguisher.getSector());
 
-                        if (extinguisher.getExtId() != null) {
-                            response.put("extId", extinguisher.getExtId());
-                        } else {
-                            response.put("extId", null);
-                        }
+                            if (extinguisher.getExtId() != null) {
+                                response.put("extId", extinguisher.getExtId());
+                            } else {
+                                response.put("extId", null);
+                            }
 
-                        if (extinguisher.getVencimiento() != null) {
-                            response.put("vencimiento", extinguisher.getVencimiento().toString());
-                        } else {
-                            response.put("vencimiento", null);
-                        }
-                        response.put("kg", extinguisher.getKg());
-                        response.put("access", extinguisher.getAccess());
-                        response.put("signaling", extinguisher.getSignaling());
-                        response.put("presion", extinguisher.getPresion());
-                        response.put("vigente", extinguisher.estaVigente());
-                        response.put("diferenciaEnDias", extinguisher.calcularDiferenciaEnDias());
-                        response.put("observaciones", extinguisher.getObservaciones());
-                        response.put("enabled", extinguisher.getEnabled());
-                        response.put("userId", extinguisher.getUserId());
-                        return response;
-                    })
-                    .collect(Collectors.toList());
+                            if (extinguisher.getVencimiento() != null) {
+                                response.put("vencimiento", extinguisher.getVencimiento().toString());
+                            } else {
+                                response.put("vencimiento", null);
+                            }
+                            response.put("kg", extinguisher.getKg());
+                            response.put("access", extinguisher.getAccess());
+                            response.put("signaling", extinguisher.getSignaling());
+                            response.put("presion", extinguisher.getPresion());
+                            response.put("vigente", extinguisher.estaVigente());
+                            response.put("diferenciaEnDias", extinguisher.calcularDiferenciaEnDias());
+                            response.put("observaciones", extinguisher.getObservaciones());
+                            response.put("enabled", extinguisher.getEnabled());
+                            response.put("userId", extinguisher.getUserId());
+                            return response;
+                        })
+                        .collect(Collectors.toList());
 
-            return new ResponseEntity<>(responseList, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+                return new ResponseEntity<>(responseList, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -125,6 +126,67 @@ public class ExtinguisherRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PreAuthorize("permitAll")
+    @GetMapping("/organization/{name}")
+    public ResponseEntity<List<Map<String, Object>>> getExtimgerherByUserAndOrganization(
+            HttpServletRequest request,
+            @PathVariable("name") String nameOrganization) {
+        try {
+            String token = request.getHeader("Authorization");
+            String userId = service.extractUserEmailFromToken(token);
+
+            List<Extinguisher> extinguishers = service.findExtinguisherByUserIdAndNameOrganization(userId, nameOrganization);
+
+            if (!extinguishers.isEmpty()) {
+                List<Map<String, Object>> responseList = extinguishers.stream()
+                        .map(extinguisher -> {
+                            Map<String, Object> response = new HashMap<>();
+                            response.put("id", extinguisher.getId());
+
+                            if (extinguisher.getDate() != null) {
+                                response.put("date", extinguisher.getDate().toString());
+                            } else {
+                                response.put("date", null);
+                            }
+                            response.put("nameOrganization", extinguisher.getNameOrganization());
+                            response.put("tipo", extinguisher.getTipo());
+                            response.put("sector", extinguisher.getSector());
+
+                            if (extinguisher.getExtId() != null) {
+                                response.put("extId", extinguisher.getExtId());
+                            } else {
+                                response.put("extId", null);
+                            }
+
+                            if (extinguisher.getVencimiento() != null) {
+                                response.put("vencimiento", extinguisher.getVencimiento().toString());
+                            } else {
+                                response.put("vencimiento", null);
+                            }
+                            response.put("kg", extinguisher.getKg());
+                            response.put("access", extinguisher.getAccess());
+                            response.put("signaling", extinguisher.getSignaling());
+                            response.put("presion", extinguisher.getPresion());
+                            response.put("vigente", extinguisher.estaVigente());
+                            response.put("diferenciaEnDias", extinguisher.calcularDiferenciaEnDias());
+                            response.put("observaciones", extinguisher.getObservaciones());
+                            response.put("enabled", extinguisher.getEnabled());
+                            response.put("userId", extinguisher.getUserId());
+                            return response;
+                        })
+                        .collect(Collectors.toList());
+
+                return new ResponseEntity<>(responseList, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
     @PutMapping("/{id}/changeEnabled")
     public ResponseEntity<ExtinguisherResponseDTO> changeEnabled(
@@ -232,8 +294,11 @@ public class ExtinguisherRestController {
     }
 
     @GetMapping("/companies")
-    public ResponseEntity<List<String>> getAllCompanies() {
-        List<String> companies = service.findAllCompanies();
+    public ResponseEntity<List<String>> getAllCompanies(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        String userId = service.extractUserEmailFromToken(token);
+
+        List<String> companies = service.findCompaniesByUserId(userId);
         if (companies.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

@@ -84,16 +84,19 @@ public class AccidentsServiceImplements implements IAccidentsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Accidents> getAccidentsByOrganization(String organization) {
         return null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AccidentMonthlySummary> getMonthlyAccidentSummary(String nameOrganization) {
         return accidentsDAO.getMonthlyAccidentSummary(nameOrganization);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Accidents editAccidents(String id, Accidents editedAccidents) {
         Accidents existingAccidents = accidentsDAO.findById(id).orElseThrow(()
                 -> new RegistroNoEncontradoException("No se encontró ningún registro con el ID: " + id));
@@ -103,5 +106,11 @@ public class AccidentsServiceImplements implements IAccidentsService {
         existingAccidents.setAlta(editedAccidents.getDateAlta() != null);
 
         return accidentsDAO.save(existingAccidents);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Accidents> findAccidentsByUserIdAndNameOrganization(String userId, String nameOrganization) {
+        return accidentsDAO.findAccidentsByUserIdAndNameOrganization(userId, nameOrganization);
     }
 }

@@ -13,14 +13,16 @@ public interface IRiskDAO extends MongoRepository<Risk, String> {
 
     List<Risk> findRiskByNameOrganizationAndAreaAndPuesto(String nameOrganization, String area, String puesto);
 
-    @Query(value = "{}", fields = "{ 'nameOrganization' : 1}")
-    List<Risk> findDistinctOrganization();
+    @Query(value = "{'userId': ?0}", fields = "{ 'nameOrganization' : 1}")
+    List<Risk> findDistinctOrganizationByUserId(String userId);
 
     @Query(value = "{'nameOrganization': ?0}", fields = "{'area': 1}")
     List<Risk> findDistinctAreaByNameOrganization(String nameOrganization);
 
     @Query(value = "{'nameOrganization': ?0, 'area': ?1}", fields = "{'puesto': 1}")
     List<Risk> findDistinctPuestoByNameOrganizationAndArea(String nameOrganization, String area);
+
+    List<Risk> findRiskByUserIdAndNameOrganization(String userId, String nameOrganization);
 
 
 }

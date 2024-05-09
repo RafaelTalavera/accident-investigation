@@ -92,7 +92,7 @@ public class LaiServiceImplements implements ILaiSevice {
 
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public String extractUserEmailFromToken(String token) {
         try {
             // Remover la palabra "Bearer " del inicio del token
@@ -105,22 +105,25 @@ public class LaiServiceImplements implements ILaiSevice {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Lai> findByUserId(String userId) {
         return laiDAO.findByUserId(userId);
     }
 
     @Override
-    public List<Lai> findDistinctOrganization() {
-        return laiDAO.findDistinctNameOrganization();
+    @Transactional(readOnly = true)
+    public List<Lai> findDistinctOrganizationByUserId(String userId) {
+        return laiDAO.findDistinctOrganizationByUserId(userId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Lai> findDistinctAreaByNameOrganization(String nameOrganization) {
         return laiDAO.findDistinctAreaByNameOrganization(nameOrganization);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Integer> countTypeOfControlByNameOrganizationAndArea(String nameOrganization, String area) {
 
         Map<String, Integer> countMap = new HashMap<>();
@@ -135,6 +138,7 @@ public class LaiServiceImplements implements ILaiSevice {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Map<String, Integer>> countMeaningfulnessByNameOrganizationAndArea(String nameOrganization, String area) {
         Map<String, Map<String, Integer>> countMap = new HashMap<>();
         List<Lai> lais = laiDAO.findByNameOrganizationAndArea(nameOrganization, area);
@@ -156,6 +160,12 @@ public class LaiServiceImplements implements ILaiSevice {
         }
 
         return countMap;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Lai> findLaiByUserIdAndNameOrganization(String userId, String nameOrganization) {
+        return laiDAO.findLaiByUserIdAndNameOrganization(userId, nameOrganization);
     }
 
 }

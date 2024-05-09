@@ -8,6 +8,7 @@ public record UserRequestDTO(
         String email,
         String phone,
         String fullname,
+        String firebase,
         Role role
 
 ) {
@@ -19,6 +20,7 @@ public record UserRequestDTO(
                 userRequestDTO.password(),
                 userRequestDTO.phone(),
                 userRequestDTO.fullname(),
+                userRequestDTO.firebase(),
                 Role.ADMINISTRATOR
         );
     }

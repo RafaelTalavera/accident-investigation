@@ -23,12 +23,14 @@ public interface ILaiSevice {
 
     List<Lai> findByUserId(String userId);
 
-    List<Lai> findDistinctOrganization();
+    List<Lai> findDistinctOrganizationByUserId(String userId);
 
     List<Lai> findDistinctAreaByNameOrganization(String nameOrganization);
 
     Map<String, Integer> countTypeOfControlByNameOrganizationAndArea(String nameOrganization, String area);
 
     Map<String, Map<String, Integer>> countMeaningfulnessByNameOrganizationAndArea(String nameOrganization,String area);
+
+    List<Lai> findLaiByUserIdAndNameOrganization(String userId, String nameOrganization);
 
 }

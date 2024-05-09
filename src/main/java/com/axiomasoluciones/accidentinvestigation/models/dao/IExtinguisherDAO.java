@@ -11,8 +11,8 @@ public interface IExtinguisherDAO extends CrudRepository<Extinguisher, String> {
     @Query("{'userId':  {$regex : ?0, $options: 'i'}}")
     List<Extinguisher> findExtinguisherByUserId(String userId);
 
-    @Query(value = "distinct('nameOrganization')")
-    List<String> findAllCompanies();
+    @Query(value = "{'userId': ?0}", fields = "{'nameOrganization': 1}")
+    List<Extinguisher> findCompaniesByUserId(String userId);
 
     List<Extinguisher> findExtinguisherByNameOrganization(String nameOrganization);
 
@@ -21,5 +21,7 @@ public interface IExtinguisherDAO extends CrudRepository<Extinguisher, String> {
     List<Extinguisher> findExtinguisherByTipo(String tipo);
 
     List<Extinguisher> findExtinguisherByTipoAndEnabled(String tipo, boolean enabled);
+
+    List<Extinguisher> findExtinguisherByUserIdAndNameOrganization(String userId, String nameOrganization);
 
 }

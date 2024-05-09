@@ -76,7 +76,6 @@ public class RiskServiceImplements implements IRiskService {
         existRisk.setNameOrganization(editedRisk.getNameOrganization());
         existRisk.setArea(editedRisk.getArea());
         existRisk.setTarea(editedRisk.getTarea());
-        existRisk.setFuente(editedRisk.getFuente());
         existRisk.setIncidentesPotenciales(editedRisk.getIncidentesPotenciales());
         existRisk.setConsecuencia(editedRisk.getConsecuencia());
         existRisk.setTipo(editedRisk.getTipo());
@@ -110,8 +109,8 @@ public class RiskServiceImplements implements IRiskService {
     }
 
     @Override
-    public List<Risk> findDistinctOrganization() {
-        return riskDao.findDistinctOrganization();
+    public List<Risk> findDistinctOrganizationByUserId(String userId) {
+        return riskDao.findDistinctOrganizationByUserId(userId);
     }
 
     @Override
@@ -150,26 +149,22 @@ public class RiskServiceImplements implements IRiskService {
             String evaluacion = risk.getEvaluacion();
             String key = organizationRisk + " - " + areaRisk + " - " + puestoRisk;
 
-            // Verificar si el área ya está en el map exterior
             if (!countMap.containsKey(key)) {
                 countMap.put(key, new HashMap<>());
             }
 
             Map<String, Integer> innerMap = countMap.get(key);
-
-            // Contar el número de veces que aparece cada evaluación en el área y puesto específicos
             innerMap.put(evaluacion, innerMap.getOrDefault(evaluacion, 0) + 1);
-
-            // Incrementar el contador total
             innerMap.put("count", innerMap.getOrDefault("count", 0) + 1);
         }
-
         return countMap;
     }
 
-
-
-
+    @Override
+    @Transactional(readOnly = true)
+   public List<Risk> findRiskByUserIdAndNameOrganization(String userId, String nameOrganization) {
+        return riskDao.findRiskByUserIdAndNameOrganization(userId, nameOrganization);
+    }
 }
 
 
