@@ -25,6 +25,7 @@ public class UserRestController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO data){
 
@@ -37,6 +38,7 @@ public class UserRestController {
 
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/firebase")
     public ResponseEntity<UserResponseDTO> createFirebase(@RequestBody UserRequestDTO data,
                                                           HttpServletRequest request){
