@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(value = "users")
 public class User implements UserDetails {
     @Id
     private String id;

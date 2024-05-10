@@ -1,6 +1,6 @@
 package com.axiomasoluciones.accidentinvestigation.services;
 
-import com.axiomasoluciones.accidentinvestigation.models.entity.Risk;
+
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
 
 import java.util.List;

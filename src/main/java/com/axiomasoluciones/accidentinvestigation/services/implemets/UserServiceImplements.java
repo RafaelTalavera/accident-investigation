@@ -4,7 +4,6 @@ package com.axiomasoluciones.accidentinvestigation.services.implemets;
 
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.dao.IUserDAO;
-import com.axiomasoluciones.accidentinvestigation.models.entity.Risk;
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
 import com.axiomasoluciones.accidentinvestigation.services.IUserService;
 import io.jsonwebtoken.Claims;
