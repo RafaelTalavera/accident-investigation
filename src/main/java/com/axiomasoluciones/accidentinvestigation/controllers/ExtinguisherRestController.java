@@ -276,9 +276,10 @@ public class ExtinguisherRestController {
         Map<String, ExtinguisherDistributionDTO> distributionMap = new HashMap<>();
         for (Extinguisher extinguisher : extinguishersByOrganization) {
             String sector = extinguisher.getSector();
-            ExtinguisherDistributionDTO distributionDTO = distributionMap.getOrDefault(sector, new ExtinguisherDistributionDTO(sector, 0, 0, 0, 0, 0));
+            ExtinguisherDistributionDTO distributionDTO = distributionMap.getOrDefault(sector, new ExtinguisherDistributionDTO(nameOrganization,sector, 0, 0, 0, 0, 0));
             // Crear un nuevo registro con los valores actualizados
             distributionDTO = new ExtinguisherDistributionDTO(
+                    distributionDTO.nameOrganization(), 
                     distributionDTO.sector(),
                     distributionDTO.total() + 1,
                     extinguisher.estaVigente() ? distributionDTO.vigentes() + 1 : distributionDTO.vigentes(),
