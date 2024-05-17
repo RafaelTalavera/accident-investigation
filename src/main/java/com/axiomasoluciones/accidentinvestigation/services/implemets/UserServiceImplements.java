@@ -76,4 +76,16 @@ public class UserServiceImplements implements IUserService {
     public Optional<User> findUserByEmail(String email) {
         return userDao.findUserByEmail(email);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userDao.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userDao.existsByUsername(username);
+    }
+
+
 }

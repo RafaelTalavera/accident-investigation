@@ -21,4 +21,8 @@ public interface IUserService {
     String extractUserEmailFromToken(String token);
 
     Optional<User> findUserByEmail(String email);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
 }

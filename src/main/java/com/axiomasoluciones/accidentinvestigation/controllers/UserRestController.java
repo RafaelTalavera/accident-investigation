@@ -30,40 +30,30 @@ public class UserRestController {
     @PreAuthorize("permitAll")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO data){
-
-        // Imprimir lo que viene del frontend
-        System.out.println("Datos recibidos del frontend: " + data);
-
-        // Convertir la contraseña a minúsculas
+    public ResponseEntity<?> createUser(@RequestBody UserRequestDTO data){
         String password = data.password().toLowerCase();
 
-        // Imprimir la contraseña antes de codificarla
-        System.out.println("Contraseña antes de codificar: " + password);
-
-        // Verificar la contraseña antes de codificarla
-        if (!passwordEncoder.matches(password, password)) {
-            // Imprimir si la contraseña no coincide antes de codificarla
-            System.out.println("Error: La contraseña no coincide con la contraseña original.");
-            // Puedes manejar el error aquí según tus requerimientos
-            // Por ejemplo, puedes lanzar una excepción o devolver un ResponseEntity con un mensaje de error.
+        // Verificar si ya existe un usuario con el mismo correo electrónico
+        if (service.existsByEmail(data.email())) {
+            // Manejar el caso donde ya existe un usuario con el mismo correo electrónico
+            return new ResponseEntity<>("Ya existe un usuario con este correo electrónico", HttpStatus.CONFLICT);
         }
 
-        // Crear un nuevo usuario
-        User newUser = new User(data);
+        // Verificar si ya existe un usuario con el mismo nombre de usuario
+        if (service.existsByUsername(data.username())) {
+            // Manejar el caso donde ya existe un usuario con el mismo nombre de usuario
+            return new ResponseEntity<>("Ya existe un usuario con este nombre de usuario", HttpStatus.CONFLICT);
+        }
 
-        // Codificar y guardar la contraseña
+        User newUser = new User(data);
         newUser.setPassword(passwordEncoder.encode(password));
         service.createUser(newUser);
 
-        // Imprimir la contraseña después de codificarla
-        System.out.println("Contraseña después de codificar: " + newUser.getPassword());
-
-        // Crear el DTO de respuesta con el nuevo usuario
         UserResponseDTO userResponseDTO = new UserResponseDTO(newUser);
 
         return new ResponseEntity<>(userResponseDTO, HttpStatus.CREATED);
     }
+
 
 
 
