@@ -25,19 +25,35 @@ public class AuthenticationServiceImplemets {
     private JwtServiceImplements jwtService;
 
     public AuthenticationResponseDTO login(AuthenticationRequestDTO authenticationRequest) {
+        // Imprimir los datos recibidos del frontend
+        System.out.println("Datos recibidos del frontend: " + authenticationRequest);
 
+        // Crear el token de autenticación
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken
                 (authenticationRequest.username(), authenticationRequest.password());
 
+        // Imprimir el token de autenticación
+        System.out.println("Token de autenticación: " + authenticationToken);
+
+        // Intentar autenticar al usuario
         authenticationManager.authenticate(authenticationToken);
 
+        // Obtener al usuario desde la base de datos
         User user = userDao.findByUsername(authenticationRequest.username()).get();
 
+        // Imprimir los datos del usuario
+        System.out.println("Datos del usuario autenticado: " + user);
+
+        // Generar el token JWT
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
 
-        return new AuthenticationResponseDTO(jwt);
+        // Imprimir el token JWT generado
+        System.out.println("Token JWT generado: " + jwt);
 
+        // Crear y retornar la respuesta DTO
+        return new AuthenticationResponseDTO(jwt);
     }
+
     private Map<String, Object> generateExtraClaims(User user){
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("mail", user.getEmail());

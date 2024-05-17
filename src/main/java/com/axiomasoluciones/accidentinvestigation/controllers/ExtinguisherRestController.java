@@ -279,7 +279,7 @@ public class ExtinguisherRestController {
             ExtinguisherDistributionDTO distributionDTO = distributionMap.getOrDefault(sector, new ExtinguisherDistributionDTO(nameOrganization,sector, 0, 0, 0, 0, 0));
             // Crear un nuevo registro con los valores actualizados
             distributionDTO = new ExtinguisherDistributionDTO(
-                    distributionDTO.nameOrganization(), 
+                    distributionDTO.nameOrganization(),
                     distributionDTO.sector(),
                     distributionDTO.total() + 1,
                     extinguisher.estaVigente() ? distributionDTO.vigentes() + 1 : distributionDTO.vigentes(),

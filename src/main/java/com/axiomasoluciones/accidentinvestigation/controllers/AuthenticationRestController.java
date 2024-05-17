@@ -23,6 +23,7 @@ public class AuthenticationRestController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponseDTO> login(
             @RequestBody @Valid AuthenticationRequestDTO authRequest){
+        System.out.println("Método login() fue invocado con la solicitud: " + authRequest);
         AuthenticationResponseDTO jwtDto = authenticationService.login(authRequest);
         return ResponseEntity.ok(jwtDto);
     }

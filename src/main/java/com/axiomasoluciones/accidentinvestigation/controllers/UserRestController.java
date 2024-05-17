@@ -32,14 +32,40 @@ public class UserRestController {
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO data){
 
+        // Imprimir lo que viene del frontend
+        System.out.println("Datos recibidos del frontend: " + data);
+
+        // Convertir la contraseña a minúsculas
+        String password = data.password().toLowerCase();
+
+        // Crear un nuevo usuario
         User newUser = new User(data);
+
+        // Imprimir la contraseña antes de codificarla
+        System.out.println("Contraseña antes de codificar: " + password);
+
+        // Verificar la contraseña antes de codificarla
+        if (!passwordEncoder.matches(password, newUser.getPassword())) {
+            // Imprimir si la contraseña no coincide antes de codificarla
+            System.out.println("Error: La contraseña no coincide con la contraseña original.");
+            // Puedes manejar el error aquí según tus requerimientos
+            // Por ejemplo, puedes lanzar una excepción o devolver un ResponseEntity con un mensaje de error.
+        }
+
+        // Codificar y guardar la contraseña
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         service.createUser(newUser);
+
+        // Imprimir la contraseña después de codificarla
+        System.out.println("Contraseña después de codificar: " + newUser.getPassword());
+
+        // Crear el DTO de respuesta con el nuevo usuario
         UserResponseDTO userResponseDTO = new UserResponseDTO(newUser);
 
         return new ResponseEntity<>(userResponseDTO, HttpStatus.CREATED);
-
     }
+
+
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/firebase")
