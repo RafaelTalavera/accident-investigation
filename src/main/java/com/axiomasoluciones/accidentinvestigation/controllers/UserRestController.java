@@ -38,22 +38,22 @@ public class UserRestController {
         // Convertir la contraseña a minúsculas
         String password = data.password().toLowerCase();
 
-        // Crear un nuevo usuario
-        User newUser = new User(data);
-
         // Imprimir la contraseña antes de codificarla
         System.out.println("Contraseña antes de codificar: " + password);
 
         // Verificar la contraseña antes de codificarla
-        if (!passwordEncoder.matches(password, newUser.getPassword())) {
+        if (!passwordEncoder.matches(password, password)) {
             // Imprimir si la contraseña no coincide antes de codificarla
             System.out.println("Error: La contraseña no coincide con la contraseña original.");
             // Puedes manejar el error aquí según tus requerimientos
             // Por ejemplo, puedes lanzar una excepción o devolver un ResponseEntity con un mensaje de error.
         }
 
+        // Crear un nuevo usuario
+        User newUser = new User(data);
+
         // Codificar y guardar la contraseña
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(password));
         service.createUser(newUser);
 
         // Imprimir la contraseña después de codificarla
