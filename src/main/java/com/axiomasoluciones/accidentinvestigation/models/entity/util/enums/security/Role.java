@@ -1,4 +1,4 @@
-package com.axiomasoluciones.accidentinvestigation.models.entity.util.security;
+package com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.security;
 
 import java.util.Arrays;
 import java.util.List;

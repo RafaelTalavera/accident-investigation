@@ -1,7 +1,5 @@
 package com.axiomasoluciones.accidentinvestigation.services.implemets;
 
-
-
 import com.axiomasoluciones.accidentinvestigation.exeption.RegistroNoEncontradoException;
 import com.axiomasoluciones.accidentinvestigation.models.dao.IUserDAO;
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
@@ -18,14 +16,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImplements implements IUserService {
+class UserServiceImplements implements IUserService {
 
     @Autowired
     private IUserDAO userDao;
 
     @Value("${security.jwt.secret-key}")
     private String SECRET_KEY;
-
 
 
     @Override

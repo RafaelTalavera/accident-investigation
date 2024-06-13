@@ -1,7 +1,8 @@
 package com.axiomasoluciones.accidentinvestigation.dto.response;
 
 import com.axiomasoluciones.accidentinvestigation.models.entity.User;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.security.Role;
+
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.security.Role;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 public record UserResponseDTO(

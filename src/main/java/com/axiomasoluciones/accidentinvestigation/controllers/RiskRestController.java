@@ -24,7 +24,6 @@ public class RiskRestController {
     @Autowired
     private IRiskService service;
 
-
     @GetMapping
     public ResponseEntity<List<RiskResponseDTO>> getAll() {
         List<Risk> risks = service.findAll();

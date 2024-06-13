@@ -1,7 +1,8 @@
 package com.axiomasoluciones.accidentinvestigation.models.entity;
 
 import com.axiomasoluciones.accidentinvestigation.dto.request.UserRequestDTO;
-import com.axiomasoluciones.accidentinvestigation.models.entity.util.security.Role;
+
+import com.axiomasoluciones.accidentinvestigation.models.entity.util.enums.security.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
